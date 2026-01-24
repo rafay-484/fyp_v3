@@ -12,10 +12,10 @@ class EnhancedChapterDetailScreen extends StatelessWidget {
   final String language;
 
   const EnhancedChapterDetailScreen({
-    Key? key,
+    super.key,
     required this.chapter,
     required this.language,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -373,7 +373,7 @@ class ModernLessonCard extends StatelessWidget {
   final String language;
 
   const ModernLessonCard({
-    Key? key,
+    super.key,
     required this.lessonNumber,
     required this.lessonData,
     required this.isCompleted,
@@ -381,7 +381,7 @@ class ModernLessonCard extends StatelessWidget {
     this.onTap,
     required this.chapter,
     required this.language,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -45,17 +45,39 @@ class FirebaseService {
         return null;
       }
 
-      // Send email verification
-      await user.sendEmailVerification();
-      print('Verification email sent to ${user.email}');
+      // Send email verification immediately after account creation
+      print('🔄 Attempting to send verification email to ${user.email}...');
+
+      try {
+        await user.sendEmailVerification();
+        print('✅ SUCCESS: Verification email sent to ${user.email}');
+        print('📧 Please check your inbox (and spam folder)');
+      } catch (emailError) {
+        print('❌ FIRST ATTEMPT FAILED: $emailError');
+
+        // Wait and retry once
+        print('🔄 Retrying after 3 seconds...');
+        await Future.delayed(const Duration(seconds: 3));
+
+        try {
+          await user.sendEmailVerification();
+          print('✅ SUCCESS ON RETRY: Verification email sent');
+        } catch (retryError) {
+          print('❌ RETRY FAILED: $retryError');
+          print('⚠️ User can still use resend button in verification screen');
+        }
+      }
 
       // Create user document in Firestore
       try {
+        final displayName = email.split('@')[0]; // Use email prefix as name
         await _firestore.collection('users').doc(user.uid).set({
           'email': email,
+          'displayName': displayName,
           'createdAt': FieldValue.serverTimestamp(),
           'emailVerified': false,
           'selectedLanguage': 'urdu',
+          'totalXP': 0,
           'totalPoints': 0,
           'currentLevel': 1,
           'lessonsCompleted': 0,
@@ -66,8 +88,12 @@ class FirebaseService {
         print('Firestore error (user still created): $firestoreError');
       }
 
-      print('User signed up successfully: ${user.uid}');
-      // Don't sign out - keep user signed in to verify email
+      print('✅ User account created: ${user.uid}');
+      print('📧 Verification email sent - user MUST verify before login');
+      print('⚠️ User is signed in but CANNOT access app until verified');
+
+      // Keep user signed in ONLY to show verification screen
+      // They will be blocked from accessing the app until email is verified
       return user.uid;
     } on FirebaseAuthException catch (e) {
       print('Firebase Auth Error: ${e.code} - ${e.message}');
@@ -97,40 +123,47 @@ class FirebaseService {
         password: password,
       );
 
-      // Wait a moment for Firebase to complete
+      // Wait for Firebase to complete
       await Future.delayed(const Duration(milliseconds: 500));
 
       final user = userCredential.user;
       if (user == null) {
-        print('Sign in failed - no user returned');
+        print('❌ Sign in failed - no user returned');
         return null;
       }
 
-      // Reload user to get latest emailVerified status from Firebase
+      // CRITICAL: Reload user to get the LATEST emailVerified status from Firebase server
       await user.reload();
       final refreshedUser = _auth.currentUser;
 
-      // Check if email is verified BEFORE allowing login
-      if (refreshedUser != null && !refreshedUser.emailVerified) {
-        print('Email not verified for user: ${user.uid}');
-        // Keep user signed in but throw error to show verification screen
+      // STRICT ENFORCEMENT: Block login if email is not verified
+      if (refreshedUser == null || !refreshedUser.emailVerified) {
+        print('🚫 EMAIL NOT VERIFIED - BLOCKING LOGIN');
+        print('   Email: ${user.email}');
+        print('   Verified status: ${refreshedUser?.emailVerified}');
+
+        // IMMEDIATELY sign out the user - they cannot proceed
+        await _auth.signOut();
+
+        print('✓ User signed out - must verify email to login');
         throw Exception('email-not-verified');
       }
 
-      // Update Firestore verification status
+      // User is verified - update Firestore
       try {
         await _firestore.collection('users').doc(user.uid).update({
           'emailVerified': true,
           'lastLoginAt': FieldValue.serverTimestamp(),
         });
       } catch (e) {
-        print('Failed to update verification status: $e');
+        print('⚠ Failed to update Firestore (non-critical): $e');
       }
 
-      print('User signed in successfully: ${user.uid}');
+      print('✅ User signed in successfully: ${user.uid}');
+      print('   Email verified: true');
       return user.uid;
     } on FirebaseAuthException catch (e) {
-      print('Sign in error: ${e.code} - ${e.message}');
+      print('❌ Firebase Auth Error: ${e.code} - ${e.message}');
       throw Exception(e.code);
     } catch (e) {
       print('Sign in error: $e');
@@ -165,11 +198,14 @@ class FirebaseService {
     try {
       final user = _auth.currentUser;
       if (user != null && !user.emailVerified) {
+        print('📧 Sending verification email to ${user.email}...');
         await user.sendEmailVerification();
-        print('Verification email sent');
+        print('✅ Verification email sent successfully!');
+      } else if (user != null && user.emailVerified) {
+        print('✓ Email already verified');
       }
     } catch (e) {
-      print('Error sending verification email: $e');
+      print('❌ Error sending verification email: $e');
       throw Exception('verification-email-failed');
     }
   }

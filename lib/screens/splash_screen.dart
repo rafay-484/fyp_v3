@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../themes/app_theme.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -17,8 +17,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigateToHome() async {
-    // Brief delay to show splash
-    await Future.delayed(const Duration(milliseconds: 800), () {});
+    // Brief delay to show splash (1 second as requested)
+    await Future.delayed(const Duration(seconds: 1), () {});
 
     if (!mounted) return;
 
@@ -26,11 +26,21 @@ class _SplashScreenState extends State<SplashScreen> {
       // Firebase is already initialized in main(), safe to use now
       final user = FirebaseAuth.instance.currentUser;
 
-      if (user != null && user.emailVerified) {
-        Navigator.of(context).pushReplacementNamed('/language-selection');
-      } else if (user != null && !user.emailVerified) {
-        Navigator.of(context).pushReplacementNamed('/email-verification');
+      if (user != null) {
+        // Reload user to get latest verification status
+        await user.reload();
+        final refreshedUser = FirebaseAuth.instance.currentUser;
+
+        if (refreshedUser != null && refreshedUser.emailVerified) {
+          // User is verified, go to language selection
+          Navigator.of(context).pushReplacementNamed('/language-selection');
+        } else {
+          // User exists but not verified - this only happens during active signup flow
+          // NOT on fresh app install (user should be signed out on fresh install)
+          Navigator.of(context).pushReplacementNamed('/email-verification');
+        }
       } else {
+        // No user logged in - go to login screen (fresh install or logged out)
         Navigator.of(context).pushReplacementNamed('/login');
       }
     } catch (e) {

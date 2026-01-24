@@ -4,7 +4,7 @@ import '../../services/firebase_service.dart';
 import '../../localization/app_strings.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({Key? key}) : super(key: key);
+  const SignupScreen({super.key});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -74,20 +74,28 @@ class _SignupScreenState extends State<SignupScreen> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Account created! Please verify your email ✉️'),
-              duration: Duration(seconds: 3),
+              content: Text(
+                '✓ Account created successfully!\n📧 Please check your email for verification link.',
+              ),
+              duration: Duration(seconds: 5),
               backgroundColor: Colors.green,
             ),
           );
 
+          // Wait a moment to show the success message
+          await Future.delayed(const Duration(seconds: 2));
+
           // Navigate to email verification screen
-          Navigator.of(context).pushReplacementNamed('/email-verification');
+          if (mounted) {
+            Navigator.of(context).pushReplacementNamed('/email-verification');
+          }
         }
       } else if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Signup failed. Email may already be in use.'),
+            content: Text('✗ Signup failed. Email may already be in use.'),
             duration: Duration(seconds: 3),
+            backgroundColor: Colors.red,
           ),
         );
       }

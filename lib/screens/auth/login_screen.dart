@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../themes/app_theme.dart';
 import '../../services/firebase_service.dart';
 import '../../localization/app_strings.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -15,6 +16,20 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
   bool _isLoading = false;
+  bool _rememberMe = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRememberMePreference();
+  }
+
+  Future<void> _loadRememberMePreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _rememberMe = prefs.getBool('rememberMe') ?? false;
+    });
+  }
 
   @override
   void dispose() {
@@ -42,10 +57,18 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (userId != null && mounted) {
+        // Save Remember Me preference
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('rememberMe', _rememberMe);
+
         if (mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('Login successful!')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('✓ Login successful!'),
+              backgroundColor: Colors.green,
+              duration: Duration(seconds: 2),
+            ),
+          );
           // Navigate to language selection
           Navigator.of(context).pushReplacementNamed('/language-selection');
         }
@@ -61,13 +84,24 @@ class _LoginScreenState extends State<LoginScreen> {
       if (mounted) {
         String errorMessage = 'Login failed: ${e.toString()}';
         if (e.toString().contains('user-not-found')) {
-          errorMessage = 'No account found. Please sign up first.';
+          errorMessage =
+              '❌ No account found with this email. Please sign up first.';
         } else if (e.toString().contains('wrong-password')) {
-          errorMessage = 'Incorrect password. Please try again.';
+          errorMessage = '❌ Incorrect password. Please try again.';
         } else if (e.toString().contains('invalid-email')) {
-          errorMessage = 'Invalid email format.';
+          errorMessage = '❌ Invalid email format.';
         } else if (e.toString().contains('email-not-verified')) {
-          // Navigate to email verification screen
+          // Show error message and navigate to verification screen
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                '🚫 Email Not Verified!\n\nYou must verify your email before logging in.\nCheck your inbox (and spam folder) for the verification link.\n\nClick it to verify, then try logging in again.',
+              ),
+              backgroundColor: Colors.red,
+              duration: Duration(seconds: 7),
+            ),
+          );
+          await Future.delayed(const Duration(seconds: 3));
           Navigator.of(context).pushReplacementNamed('/email-verification');
           return; // Exit early
         }
@@ -175,7 +209,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   obscureText: _obscurePassword,
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 16),
+
+                // Remember Me Checkbox
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _rememberMe,
+                      onChanged: (value) {
+                        setState(() {
+                          _rememberMe = value ?? false;
+                        });
+                      },
+                      activeColor: AppTheme.primaryGreen,
+                    ),
+                    const Text(
+                      'Remember Me (مجھے یاد رکھیں)',
+                      style: TextStyle(fontSize: 14, color: AppTheme.darkGray),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
 
                 // Login Button
                 ElevatedButton(

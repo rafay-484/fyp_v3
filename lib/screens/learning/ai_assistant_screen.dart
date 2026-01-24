@@ -5,7 +5,7 @@ import '../../services/voice_service.dart';
 import '../../providers/user_provider.dart';
 
 class AIAssistantScreen extends StatefulWidget {
-  const AIAssistantScreen({Key? key}) : super(key: key);
+  const AIAssistantScreen({super.key});
 
   @override
   State<AIAssistantScreen> createState() => _AIAssistantScreenState();
@@ -321,8 +321,7 @@ class _AIAssistantScreenState extends State<AIAssistantScreen> {
 class QuickActionChips extends StatelessWidget {
   final Function(String) onActionSelected;
 
-  const QuickActionChips({Key? key, required this.onActionSelected})
-    : super(key: key);
+  const QuickActionChips({super.key, required this.onActionSelected});
 
   @override
   Widget build(BuildContext context) {

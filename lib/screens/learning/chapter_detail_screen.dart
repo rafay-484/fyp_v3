@@ -9,10 +9,10 @@ class ChapterDetailScreen extends StatelessWidget {
   final String language;
 
   const ChapterDetailScreen({
-    Key? key,
+    super.key,
     required this.chapter,
     required this.language,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

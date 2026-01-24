@@ -7,7 +7,7 @@ import '../../providers/adaptive_learning_provider.dart';
 import 'chapter_detail_screen.dart';
 
 class ModernLearnScreen extends StatelessWidget {
-  const ModernLearnScreen({Key? key}) : super(key: key);
+  const ModernLearnScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -137,13 +137,13 @@ class ModernChapterCard extends StatefulWidget {
   final int? lastScore;
 
   const ModernChapterCard({
-    Key? key,
+    super.key,
     required this.chapter,
     required this.chapterNumber,
     required this.language,
     this.needsRelearning = false,
     this.lastScore,
-  }) : super(key: key);
+  });
 
   @override
   State<ModernChapterCard> createState() => _ModernChapterCardState();
@@ -153,7 +153,7 @@ class _ModernChapterCardState extends State<ModernChapterCard>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
-  bool _isHovered = false;
+  final bool _isHovered = false;
 
   @override
   void initState() {
@@ -477,7 +477,7 @@ class _ModernChapterCardState extends State<ModernChapterCard>
 
 // Animated Path Connector
 class PathConnector extends StatelessWidget {
-  const PathConnector({Key? key}) : super(key: key);
+  const PathConnector({super.key});
 
   @override
   Widget build(BuildContext context) {

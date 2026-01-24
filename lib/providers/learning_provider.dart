@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 class Chapter {
   final String id;
   final String title;
+  final String description; // English translation/description
   final String language; // 'urdu', 'punjabi'
   final int lessonCount;
   final bool isLocked;
@@ -11,6 +12,7 @@ class Chapter {
   Chapter({
     required this.id,
     required this.title,
+    required this.description,
     required this.language,
     required this.lessonCount,
     this.isLocked = true,
@@ -73,8 +75,8 @@ class QuizQuestion {
 class LearningProvider extends ChangeNotifier {
   List<Chapter> _urduChapters = [];
   List<Chapter> _punjabiChapters = [];
-  List<Lesson> _lessons = [];
-  List<Quiz> _quizzes = [];
+  final List<Lesson> _lessons = [];
+  final List<Quiz> _quizzes = [];
 
   // Track completed lessons per chapter (chapterId -> Set of completed lesson indices)
   final Map<String, Set<int>> _completedLessonsPerChapter = {};
@@ -94,6 +96,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'urdu_ch1',
         title: 'بنیادی الفاظ',
+        description: 'Basic Words - Learn essential Urdu vocabulary',
         language: 'urdu',
         lessonCount: 5,
         isLocked: false,
@@ -102,6 +105,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'urdu_ch2',
         title: 'روزمرہ کی گفتگو',
+        description: 'Daily Conversation - Common phrases for everyday use',
         language: 'urdu',
         lessonCount: 5,
         isLocked: false,
@@ -110,6 +114,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'urdu_ch3',
         title: 'قواعد النحو',
+        description: 'Grammar Rules - Master Urdu sentence structure',
         language: 'urdu',
         lessonCount: 5,
         isLocked: false,
@@ -118,6 +123,8 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'urdu_ch4',
         title: 'مواصلات اور سفر',
+        description:
+            'Communication & Travel - Navigate and communicate while traveling',
         language: 'urdu',
         lessonCount: 5,
         isLocked: false,
@@ -126,6 +133,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'urdu_ch5',
         title: 'کھانا اور پکانا',
+        description: 'Food & Cooking - Learn food-related vocabulary',
         language: 'urdu',
         lessonCount: 5,
         isLocked: false,
@@ -134,6 +142,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'urdu_ch6',
         title: 'صحت اور جسم',
+        description: 'Health & Body - Medical and body-related terms',
         language: 'urdu',
         lessonCount: 5,
         isLocked: false,
@@ -142,6 +151,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'urdu_ch7',
         title: 'تعلیم اور سیکھنا',
+        description: 'Education & Learning - Academic vocabulary',
         language: 'urdu',
         lessonCount: 5,
         isLocked: false,
@@ -150,6 +160,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'urdu_ch8',
         title: 'کام اور پیشے',
+        description: 'Work & Professions - Career and workplace terms',
         language: 'urdu',
         lessonCount: 5,
         isLocked: false,
@@ -158,6 +169,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'urdu_ch9',
         title: 'ٹیکنالوجی',
+        description: 'Technology - Modern tech vocabulary',
         language: 'urdu',
         lessonCount: 5,
         isLocked: false,
@@ -166,6 +178,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'urdu_ch10',
         title: 'ثقافت اور مذہب',
+        description: 'Culture & Religion - Cultural and religious terms',
         language: 'urdu',
         lessonCount: 5,
         isLocked: false,
@@ -178,6 +191,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'punjabi_ch1',
         title: 'بنیادی الفاظ',
+        description: 'Basic Words - Learn essential Punjabi vocabulary',
         language: 'punjabi',
         lessonCount: 5,
         isLocked: false,
@@ -186,6 +200,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'punjabi_ch2',
         title: 'روزمرہ دے کم',
+        description: 'Daily Tasks - Common phrases for everyday activities',
         language: 'punjabi',
         lessonCount: 5,
         isLocked: false,
@@ -194,6 +209,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'punjabi_ch3',
         title: 'جذبات',
+        description: 'Emotions - Express your feelings in Punjabi',
         language: 'punjabi',
         lessonCount: 5,
         isLocked: false,
@@ -202,6 +218,8 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'punjabi_ch4',
         title: 'مواصلات تے سفر',
+        description:
+            'Communication & Travel - Navigate and communicate while traveling',
         language: 'punjabi',
         lessonCount: 5,
         isLocked: false,
@@ -210,6 +228,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'punjabi_ch5',
         title: 'کھاݨ پکاݨ',
+        description: 'Food & Cooking - Learn food-related vocabulary',
         language: 'punjabi',
         lessonCount: 5,
         isLocked: false,
@@ -218,6 +237,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'punjabi_ch6',
         title: 'صحت تے جسم',
+        description: 'Health & Body - Medical and body-related terms',
         language: 'punjabi',
         lessonCount: 5,
         isLocked: false,
@@ -226,6 +246,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'punjabi_ch7',
         title: 'پڑھائی',
+        description: 'Education - Academic and learning vocabulary',
         language: 'punjabi',
         lessonCount: 5,
         isLocked: false,
@@ -234,6 +255,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'punjabi_ch8',
         title: 'کم تے پیشے',
+        description: 'Work & Professions - Career and workplace terms',
         language: 'punjabi',
         lessonCount: 5,
         isLocked: false,
@@ -242,6 +264,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'punjabi_ch9',
         title: 'ٹیکنالوجی',
+        description: 'Technology - Modern tech vocabulary',
         language: 'punjabi',
         lessonCount: 5,
         isLocked: false,
@@ -250,6 +273,7 @@ class LearningProvider extends ChangeNotifier {
       Chapter(
         id: 'punjabi_ch10',
         title: 'ثقافت تے مذہب',
+        description: 'Culture & Religion - Cultural and religious terms',
         language: 'punjabi',
         lessonCount: 5,
         isLocked: false,
@@ -305,6 +329,7 @@ class LearningProvider extends ChangeNotifier {
         _urduChapters[i] = Chapter(
           id: _urduChapters[i].id,
           title: _urduChapters[i].title,
+          description: _urduChapters[i].description,
           language: _urduChapters[i].language,
           lessonCount: _urduChapters[i].lessonCount,
           isLocked: _urduChapters[i].isLocked,
@@ -321,6 +346,7 @@ class LearningProvider extends ChangeNotifier {
         _punjabiChapters[i] = Chapter(
           id: _punjabiChapters[i].id,
           title: _punjabiChapters[i].title,
+          description: _punjabiChapters[i].description,
           language: _punjabiChapters[i].language,
           lessonCount: _punjabiChapters[i].lessonCount,
           isLocked: _punjabiChapters[i].isLocked,
@@ -350,6 +376,7 @@ class LearningProvider extends ChangeNotifier {
           _urduChapters[i + 1] = Chapter(
             id: _urduChapters[i + 1].id,
             title: _urduChapters[i + 1].title,
+            description: _urduChapters[i + 1].description,
             language: _urduChapters[i + 1].language,
             lessonCount: _urduChapters[i + 1].lessonCount,
             isLocked: false,
@@ -363,6 +390,7 @@ class LearningProvider extends ChangeNotifier {
           _punjabiChapters[i + 1] = Chapter(
             id: _punjabiChapters[i + 1].id,
             title: _punjabiChapters[i + 1].title,
+            description: _punjabiChapters[i + 1].description,
             language: _punjabiChapters[i + 1].language,
             lessonCount: _punjabiChapters[i + 1].lessonCount,
             isLocked: false,

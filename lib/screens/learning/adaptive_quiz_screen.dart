@@ -12,11 +12,11 @@ class AdaptiveQuizScreen extends StatefulWidget {
   final int lessonNumber;
 
   const AdaptiveQuizScreen({
-    Key? key,
+    super.key,
     required this.chapter,
     required this.lessonData,
     required this.lessonNumber,
-  }) : super(key: key);
+  });
 
   @override
   State<AdaptiveQuizScreen> createState() => _AdaptiveQuizScreenState();
@@ -27,7 +27,7 @@ class _AdaptiveQuizScreenState extends State<AdaptiveQuizScreen>
   late List<QuizQuestion> _questions;
   int _currentQuestionIndex = 0;
   int _score = 0;
-  List<String> _missedWords = [];
+  final List<String> _missedWords = [];
   bool _showResult = false;
   String? _selectedAnswer;
   late AnimationController _animationController;

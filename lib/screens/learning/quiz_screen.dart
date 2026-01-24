@@ -7,7 +7,7 @@ import '../../providers/gamification_provider.dart';
 class QuizScreen extends StatefulWidget {
   final Chapter chapter;
 
-  const QuizScreen({Key? key, required this.chapter}) : super(key: key);
+  const QuizScreen({super.key, required this.chapter});
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -231,7 +231,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         ),
                       ),
                     );
-                  }).toList(),
+                  }),
                 ],
               ),
             ),

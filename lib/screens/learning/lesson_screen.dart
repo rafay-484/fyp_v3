@@ -12,8 +12,7 @@ class LessonScreen extends StatefulWidget {
   final Chapter chapter;
   final int lessonIndex;
 
-  const LessonScreen({Key? key, required this.chapter, this.lessonIndex = 0})
-    : super(key: key);
+  const LessonScreen({super.key, required this.chapter, this.lessonIndex = 0});
 
   @override
   State<LessonScreen> createState() => _LessonScreenState();
@@ -41,19 +40,7 @@ class _LessonScreenState extends State<LessonScreen> {
     final language = userProvider.currentUser?.selectedLanguage ?? 'urdu';
 
     try {
-      // Check if ML model server is available
-      final modelAvailable = await MLVocabularyService.checkModelAvailability();
-
-      if (!modelAvailable) {
-        // Show error - model is required for FYP
-        if (mounted) {
-          _showModelRequiredError();
-        }
-        setState(() => _isLoading = false);
-        return;
-      }
-
-      // Generate vocabulary using XLM-RoBERTa model ONLY
+      // Generate vocabulary using ML model (Hugging Face or local)
       final mlVocabulary = await MLVocabularyService.generateVocabularyWithML(
         chapterId: widget.chapter.id,
         lessonIndex: widget.lessonIndex,
@@ -61,23 +48,10 @@ class _LessonScreenState extends State<LessonScreen> {
         count: 12,
       );
 
-      if (mlVocabulary.isEmpty) {
-        // Model didn't return vocabulary
-        if (mounted) {
-          _showModelError(
-            'Model failed to generate vocabulary. Please check the model server.',
-          );
-        }
-        setState(() => _isLoading = false);
-        return;
-      }
-
-      // Build lesson steps from ML-generated vocabulary
+      // Build lesson steps from generated vocabulary
       final steps = <LessonStep>[];
 
-      print(
-        '✓ Using XLM-RoBERTa model - Generated ${mlVocabulary.length} words',
-      );
+      print('✓ Generated ${mlVocabulary.length} vocabulary items');
 
       // Add vocabulary cards from ML model
       for (var mlWord in mlVocabulary) {
@@ -291,22 +265,56 @@ class _LessonScreenState extends State<LessonScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: const Text('🎉 مبارک ہو!'),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: const Row(
+          children: [
+            Icon(Icons.celebration, color: Colors.amber, size: 32),
+            SizedBox(width: 12),
+            Text('Congratulations! 🎉'),
+          ],
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('سبق مکمل ہو گیا!'),
-            const SizedBox(height: 16),
-            Text(
-              '+$earnedXP XP',
-              style: const TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: AppTheme.primaryGreen,
+            const Text(
+              'Lesson Completed!',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(height: 24),
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    AppTheme.primaryGreen,
+                    AppTheme.primaryGreen.withOpacity(0.7),
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                children: [
+                  const Text(
+                    'XP Earned',
+                    style: TextStyle(color: Colors.white70, fontSize: 14),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '+$earnedXP',
+                    style: const TextStyle(
+                      fontSize: 48,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 8),
-            Text('Score: $_score/${_lessonSteps.length}'),
+            const SizedBox(height: 16),
+            Text(
+              'Score: $_score/${_lessonSteps.length}',
+              style: const TextStyle(fontSize: 16),
+            ),
           ],
         ),
         actions: [
@@ -315,7 +323,7 @@ class _LessonScreenState extends State<LessonScreen> {
               Navigator.of(context).pop();
               Navigator.of(context).pop();
             },
-            child: const Text('واپس'),
+            child: const Text('Back to Chapters'),
           ),
         ],
       ),
@@ -365,103 +373,239 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 
   Widget _buildVocabularyCard(content.VocabularyWord word, String language) {
-    return Padding(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Card(
-            elevation: 4,
-            child: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Column(
-                children: [
-                  Text(
-                    word.word,
-                    style: const TextStyle(
-                      fontSize: 64,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.volume_up,
-                      size: 48,
-                      color: AppTheme.primaryGreen,
-                    ),
-                    onPressed: () {
-                      VoiceService.speak(
-                        word.word,
-                        language == 'urdu' ? 'ur-PK' : 'pa-IN',
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 24),
-                  Text(
-                    word.translation,
-                    style: const TextStyle(
-                      fontSize: 32,
-                      color: AppTheme.primaryGreen,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    word.pronunciation,
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey[600],
-                      fontStyle: FontStyle.italic,
-                    ),
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 500),
+      transitionBuilder: (child, animation) {
+        return FadeTransition(
+          opacity: animation,
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0.3, 0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          ),
+        );
+      },
+      child: Padding(
+        key: ValueKey(_currentStep),
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // English Translation (Primary - for English speakers)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    AppTheme.primaryGreen,
+                    AppTheme.primaryGreen.withOpacity(0.7),
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppTheme.primaryGreen.withOpacity(0.3),
+                    blurRadius: 15,
+                    offset: const Offset(0, 5),
                   ),
                 ],
               ),
-            ),
-          ),
-          const SizedBox(height: 32),
-          Card(
-            color: AppTheme.lightGreen.withOpacity(0.3),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
                   const Text(
-                    'مثال:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    'English Meaning',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white70,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.2,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    word.example,
-                    style: const TextStyle(fontSize: 20),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    word.exampleTranslation,
-                    style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                    word.translation,
+                    style: const TextStyle(
+                      fontSize: 42,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ],
               ),
             ),
-          ),
-          const Spacer(),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                setState(() => _score++);
-                _nextStep();
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(16),
-                backgroundColor: AppTheme.primaryGreen,
-                foregroundColor: Colors.white,
+            const SizedBox(height: 32),
+
+            // Target Language Word Card
+            Card(
+              elevation: 8,
+              shadowColor: AppTheme.primaryGreen.withOpacity(0.3),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
               ),
-              child: const Text('اگلا', style: TextStyle(fontSize: 20)),
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Column(
+                  children: [
+                    Text(
+                      language == 'urdu' ? 'Urdu' : 'Punjabi',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.5,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      word.word,
+                      style: const TextStyle(
+                        fontSize: 64,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    IconButton(
+                      icon: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: AppTheme.primaryGreen.withOpacity(0.1),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.volume_up,
+                          size: 32,
+                          color: AppTheme.primaryGreen,
+                        ),
+                      ),
+                      onPressed: () {
+                        VoiceService.speak(
+                          word.word,
+                          language == 'urdu' ? 'ur-PK' : 'pa-IN',
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        word.pronunciation,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[700],
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 24),
+
+            // Example Section
+            Card(
+              color: AppTheme.lightGreen.withOpacity(0.3),
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.lightbulb_outline,
+                          color: Colors.orange[700],
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        const Text(
+                          'Example Usage',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      word.example,
+                      style: const TextStyle(fontSize: 20),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        word.exampleTranslation,
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey[800],
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const Spacer(),
+
+            // Continue Button
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() => _score++);
+                  _nextStep();
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(18),
+                  backgroundColor: AppTheme.primaryGreen,
+                  foregroundColor: Colors.white,
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Continue',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Icon(Icons.arrow_forward),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

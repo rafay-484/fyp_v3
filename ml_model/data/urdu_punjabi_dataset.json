@@ -1,0 +1,3243 @@
+[
+  {
+    "text":"السلام علیکم",
+    "translation":"Hello\/Peace be upon you",
+    "language":"urdu",
+    "category":"greeting",
+    "label":0
+  },
+  {
+    "text":"وعلیکم السلام",
+    "translation":"And peace be upon you too",
+    "language":"urdu",
+    "category":"greeting",
+    "label":0
+  },
+  {
+    "text":"صبح بخیر",
+    "translation":"Good morning",
+    "language":"urdu",
+    "category":"greeting",
+    "label":0
+  },
+  {
+    "text":"شام بخیر",
+    "translation":"Good evening",
+    "language":"urdu",
+    "category":"greeting",
+    "label":0
+  },
+  {
+    "text":"رات بخیر",
+    "translation":"Good night",
+    "language":"urdu",
+    "category":"greeting",
+    "label":0
+  },
+  {
+    "text":"خوش آمدید",
+    "translation":"Welcome",
+    "language":"urdu",
+    "category":"greeting",
+    "label":0
+  },
+  {
+    "text":"الوداع",
+    "translation":"Goodbye",
+    "language":"urdu",
+    "category":"greeting",
+    "label":0
+  },
+  {
+    "text":"پھر ملیں گے",
+    "translation":"See you later",
+    "language":"urdu",
+    "category":"greeting",
+    "label":0
+  },
+  {
+    "text":"شکریہ",
+    "translation":"Thank you",
+    "language":"urdu",
+    "category":"polite",
+    "label":0
+  },
+  {
+    "text":"بہت شکریہ",
+    "translation":"Thank you very much",
+    "language":"urdu",
+    "category":"polite",
+    "label":0
+  },
+  {
+    "text":"آپ کا بہت بہت شکریہ",
+    "translation":"Thank you so much",
+    "language":"urdu",
+    "category":"polite",
+    "label":0
+  },
+  {
+    "text":"معاف کیجیے",
+    "translation":"Excuse me\/Sorry",
+    "language":"urdu",
+    "category":"polite",
+    "label":0
+  },
+  {
+    "text":"مہربانی",
+    "translation":"Please\/Kindness",
+    "language":"urdu",
+    "category":"polite",
+    "label":0
+  },
+  {
+    "text":"براہ مہربانی",
+    "translation":"Please",
+    "language":"urdu",
+    "category":"polite",
+    "label":0
+  },
+  {
+    "text":"کوئی بات نہیں",
+    "translation":"No problem\/You're welcome",
+    "language":"urdu",
+    "category":"polite",
+    "label":0
+  },
+  {
+    "text":"معاف کریں",
+    "translation":"Forgive me",
+    "language":"urdu",
+    "category":"polite",
+    "label":0
+  },
+  {
+    "text":"ہاں",
+    "translation":"Yes",
+    "language":"urdu",
+    "category":"response",
+    "label":0
+  },
+  {
+    "text":"نہیں",
+    "translation":"No",
+    "language":"urdu",
+    "category":"response",
+    "label":0
+  },
+  {
+    "text":"ٹھیک ہے",
+    "translation":"Okay\/Alright",
+    "language":"urdu",
+    "category":"response",
+    "label":0
+  },
+  {
+    "text":"بالکل",
+    "translation":"Absolutely",
+    "language":"urdu",
+    "category":"response",
+    "label":0
+  },
+  {
+    "text":"شاید",
+    "translation":"Maybe\/Perhaps",
+    "language":"urdu",
+    "category":"response",
+    "label":0
+  },
+  {
+    "text":"یقیناً",
+    "translation":"Certainly",
+    "language":"urdu",
+    "category":"response",
+    "label":0
+  },
+  {
+    "text":"ضرور",
+    "translation":"Of course",
+    "language":"urdu",
+    "category":"response",
+    "label":0
+  },
+  {
+    "text":"بلکل ٹھیک",
+    "translation":"Absolutely right",
+    "language":"urdu",
+    "category":"response",
+    "label":0
+  },
+  {
+    "text":"آپ کیسے ہیں؟",
+    "translation":"How are you?",
+    "language":"urdu",
+    "category":"question",
+    "label":0
+  },
+  {
+    "text":"آپ کا نام کیا ہے؟",
+    "translation":"What is your name?",
+    "language":"urdu",
+    "category":"question",
+    "label":0
+  },
+  {
+    "text":"آپ کہاں سے ہیں؟",
+    "translation":"Where are you from?",
+    "language":"urdu",
+    "category":"question",
+    "label":0
+  },
+  {
+    "text":"یہ کیا ہے؟",
+    "translation":"What is this?",
+    "language":"urdu",
+    "category":"question",
+    "label":0
+  },
+  {
+    "text":"کیوں؟",
+    "translation":"Why?",
+    "language":"urdu",
+    "category":"question",
+    "label":0
+  },
+  {
+    "text":"کب؟",
+    "translation":"When?",
+    "language":"urdu",
+    "category":"question",
+    "label":0
+  },
+  {
+    "text":"کہاں؟",
+    "translation":"Where?",
+    "language":"urdu",
+    "category":"question",
+    "label":0
+  },
+  {
+    "text":"کیسے؟",
+    "translation":"How?",
+    "language":"urdu",
+    "category":"question",
+    "label":0
+  },
+  {
+    "text":"کون؟",
+    "translation":"Who?",
+    "language":"urdu",
+    "category":"question",
+    "label":0
+  },
+  {
+    "text":"کتنا؟",
+    "translation":"How much?",
+    "language":"urdu",
+    "category":"question",
+    "label":0
+  },
+  {
+    "text":"والد",
+    "translation":"Father",
+    "language":"urdu",
+    "category":"family",
+    "label":0
+  },
+  {
+    "text":"والدہ",
+    "translation":"Mother",
+    "language":"urdu",
+    "category":"family",
+    "label":0
+  },
+  {
+    "text":"بھائی",
+    "translation":"Brother",
+    "language":"urdu",
+    "category":"family",
+    "label":0
+  },
+  {
+    "text":"بہن",
+    "translation":"Sister",
+    "language":"urdu",
+    "category":"family",
+    "label":0
+  },
+  {
+    "text":"دادا",
+    "translation":"Grandfather (paternal)",
+    "language":"urdu",
+    "category":"family",
+    "label":0
+  },
+  {
+    "text":"دادی",
+    "translation":"Grandmother (paternal)",
+    "language":"urdu",
+    "category":"family",
+    "label":0
+  },
+  {
+    "text":"نانا",
+    "translation":"Grandfather (maternal)",
+    "language":"urdu",
+    "category":"family",
+    "label":0
+  },
+  {
+    "text":"نانی",
+    "translation":"Grandmother (maternal)",
+    "language":"urdu",
+    "category":"family",
+    "label":0
+  },
+  {
+    "text":"بیٹا",
+    "translation":"Son",
+    "language":"urdu",
+    "category":"family",
+    "label":0
+  },
+  {
+    "text":"بیٹی",
+    "translation":"Daughter",
+    "language":"urdu",
+    "category":"family",
+    "label":0
+  },
+  {
+    "text":"خاندان",
+    "translation":"Family",
+    "language":"urdu",
+    "category":"family",
+    "label":0
+  },
+  {
+    "text":"رشتہ دار",
+    "translation":"Relative",
+    "language":"urdu",
+    "category":"family",
+    "label":0
+  },
+  {
+    "text":"کھانا",
+    "translation":"Food",
+    "language":"urdu",
+    "category":"food",
+    "label":0
+  },
+  {
+    "text":"پانی",
+    "translation":"Water",
+    "language":"urdu",
+    "category":"food",
+    "label":0
+  },
+  {
+    "text":"دودھ",
+    "translation":"Milk",
+    "language":"urdu",
+    "category":"food",
+    "label":0
+  },
+  {
+    "text":"چائے",
+    "translation":"Tea",
+    "language":"urdu",
+    "category":"food",
+    "label":0
+  },
+  {
+    "text":"کافی",
+    "translation":"Coffee",
+    "language":"urdu",
+    "category":"food",
+    "label":0
+  },
+  {
+    "text":"روٹی",
+    "translation":"Bread",
+    "language":"urdu",
+    "category":"food",
+    "label":0
+  },
+  {
+    "text":"چاول",
+    "translation":"Rice",
+    "language":"urdu",
+    "category":"food",
+    "label":0
+  },
+  {
+    "text":"گوشت",
+    "translation":"Meat",
+    "language":"urdu",
+    "category":"food",
+    "label":0
+  },
+  {
+    "text":"مچھلی",
+    "translation":"Fish",
+    "language":"urdu",
+    "category":"food",
+    "label":0
+  },
+  {
+    "text":"سبزی",
+    "translation":"Vegetable",
+    "language":"urdu",
+    "category":"food",
+    "label":0
+  },
+  {
+    "text":"پھل",
+    "translation":"Fruit",
+    "language":"urdu",
+    "category":"food",
+    "label":0
+  },
+  {
+    "text":"ناشتہ",
+    "translation":"Breakfast",
+    "language":"urdu",
+    "category":"food",
+    "label":0
+  },
+  {
+    "text":"دوپہر کا کھانا",
+    "translation":"Lunch",
+    "language":"urdu",
+    "category":"food",
+    "label":0
+  },
+  {
+    "text":"رات کا کھانا",
+    "translation":"Dinner",
+    "language":"urdu",
+    "category":"food",
+    "label":0
+  },
+  {
+    "text":"ایک",
+    "translation":"One",
+    "language":"urdu",
+    "category":"number",
+    "label":0
+  },
+  {
+    "text":"دو",
+    "translation":"Two",
+    "language":"urdu",
+    "category":"number",
+    "label":0
+  },
+  {
+    "text":"تین",
+    "translation":"Three",
+    "language":"urdu",
+    "category":"number",
+    "label":0
+  },
+  {
+    "text":"چار",
+    "translation":"Four",
+    "language":"urdu",
+    "category":"number",
+    "label":0
+  },
+  {
+    "text":"پانچ",
+    "translation":"Five",
+    "language":"urdu",
+    "category":"number",
+    "label":0
+  },
+  {
+    "text":"چھ",
+    "translation":"Six",
+    "language":"urdu",
+    "category":"number",
+    "label":0
+  },
+  {
+    "text":"سات",
+    "translation":"Seven",
+    "language":"urdu",
+    "category":"number",
+    "label":0
+  },
+  {
+    "text":"آٹھ",
+    "translation":"Eight",
+    "language":"urdu",
+    "category":"number",
+    "label":0
+  },
+  {
+    "text":"نو",
+    "translation":"Nine",
+    "language":"urdu",
+    "category":"number",
+    "label":0
+  },
+  {
+    "text":"دس",
+    "translation":"Ten",
+    "language":"urdu",
+    "category":"number",
+    "label":0
+  },
+  {
+    "text":"بیس",
+    "translation":"Twenty",
+    "language":"urdu",
+    "category":"number",
+    "label":0
+  },
+  {
+    "text":"سو",
+    "translation":"Hundred",
+    "language":"urdu",
+    "category":"number",
+    "label":0
+  },
+  {
+    "text":"ہزار",
+    "translation":"Thousand",
+    "language":"urdu",
+    "category":"number",
+    "label":0
+  },
+  {
+    "text":"رنگ",
+    "translation":"Color",
+    "language":"urdu",
+    "category":"color",
+    "label":0
+  },
+  {
+    "text":"سفید",
+    "translation":"White",
+    "language":"urdu",
+    "category":"color",
+    "label":0
+  },
+  {
+    "text":"کالا",
+    "translation":"Black",
+    "language":"urdu",
+    "category":"color",
+    "label":0
+  },
+  {
+    "text":"لال",
+    "translation":"Red",
+    "language":"urdu",
+    "category":"color",
+    "label":0
+  },
+  {
+    "text":"نیلا",
+    "translation":"Blue",
+    "language":"urdu",
+    "category":"color",
+    "label":0
+  },
+  {
+    "text":"سبز",
+    "translation":"Green",
+    "language":"urdu",
+    "category":"color",
+    "label":0
+  },
+  {
+    "text":"پیلا",
+    "translation":"Yellow",
+    "language":"urdu",
+    "category":"color",
+    "label":0
+  },
+  {
+    "text":"نارنجی",
+    "translation":"Orange",
+    "language":"urdu",
+    "category":"color",
+    "label":0
+  },
+  {
+    "text":"جامنی",
+    "translation":"Purple",
+    "language":"urdu",
+    "category":"color",
+    "label":0
+  },
+  {
+    "text":"گلابی",
+    "translation":"Pink",
+    "language":"urdu",
+    "category":"color",
+    "label":0
+  },
+  {
+    "text":"بھورا",
+    "translation":"Brown",
+    "language":"urdu",
+    "category":"color",
+    "label":0
+  },
+  {
+    "text":"وقت",
+    "translation":"Time",
+    "language":"urdu",
+    "category":"time",
+    "label":0
+  },
+  {
+    "text":"دن",
+    "translation":"Day",
+    "language":"urdu",
+    "category":"time",
+    "label":0
+  },
+  {
+    "text":"رات",
+    "translation":"Night",
+    "language":"urdu",
+    "category":"time",
+    "label":0
+  },
+  {
+    "text":"صبح",
+    "translation":"Morning",
+    "language":"urdu",
+    "category":"time",
+    "label":0
+  },
+  {
+    "text":"دوپہر",
+    "translation":"Afternoon",
+    "language":"urdu",
+    "category":"time",
+    "label":0
+  },
+  {
+    "text":"شام",
+    "translation":"Evening",
+    "language":"urdu",
+    "category":"time",
+    "label":0
+  },
+  {
+    "text":"آج",
+    "translation":"Today",
+    "language":"urdu",
+    "category":"time",
+    "label":0
+  },
+  {
+    "text":"کل",
+    "translation":"Yesterday\/Tomorrow",
+    "language":"urdu",
+    "category":"time",
+    "label":0
+  },
+  {
+    "text":"پرسوں",
+    "translation":"Day before\/after tomorrow",
+    "language":"urdu",
+    "category":"time",
+    "label":0
+  },
+  {
+    "text":"ہفتہ",
+    "translation":"Week",
+    "language":"urdu",
+    "category":"time",
+    "label":0
+  },
+  {
+    "text":"مہینہ",
+    "translation":"Month",
+    "language":"urdu",
+    "category":"time",
+    "label":0
+  },
+  {
+    "text":"سال",
+    "translation":"Year",
+    "language":"urdu",
+    "category":"time",
+    "label":0
+  },
+  {
+    "text":"گھر",
+    "translation":"Home\/House",
+    "language":"urdu",
+    "category":"place",
+    "label":0
+  },
+  {
+    "text":"اسکول",
+    "translation":"School",
+    "language":"urdu",
+    "category":"place",
+    "label":0
+  },
+  {
+    "text":"دفتر",
+    "translation":"Office",
+    "language":"urdu",
+    "category":"place",
+    "label":0
+  },
+  {
+    "text":"دکان",
+    "translation":"Shop",
+    "language":"urdu",
+    "category":"place",
+    "label":0
+  },
+  {
+    "text":"بازار",
+    "translation":"Market",
+    "language":"urdu",
+    "category":"place",
+    "label":0
+  },
+  {
+    "text":"اسپتال",
+    "translation":"Hospital",
+    "language":"urdu",
+    "category":"place",
+    "label":0
+  },
+  {
+    "text":"ریستوراں",
+    "translation":"Restaurant",
+    "language":"urdu",
+    "category":"place",
+    "label":0
+  },
+  {
+    "text":"ہوٹل",
+    "translation":"Hotel",
+    "language":"urdu",
+    "category":"place",
+    "label":0
+  },
+  {
+    "text":"مسجد",
+    "translation":"Mosque",
+    "language":"urdu",
+    "category":"place",
+    "label":0
+  },
+  {
+    "text":"پارک",
+    "translation":"Park",
+    "language":"urdu",
+    "category":"place",
+    "label":0
+  },
+  {
+    "text":"شہر",
+    "translation":"City",
+    "language":"urdu",
+    "category":"place",
+    "label":0
+  },
+  {
+    "text":"ملک",
+    "translation":"Country",
+    "language":"urdu",
+    "category":"place",
+    "label":0
+  },
+  {
+    "text":"جانا",
+    "translation":"To go",
+    "language":"urdu",
+    "category":"verb",
+    "label":0
+  },
+  {
+    "text":"آنا",
+    "translation":"To come",
+    "language":"urdu",
+    "category":"verb",
+    "label":0
+  },
+  {
+    "text":"کھانا",
+    "translation":"To eat",
+    "language":"urdu",
+    "category":"verb",
+    "label":0
+  },
+  {
+    "text":"پینا",
+    "translation":"To drink",
+    "language":"urdu",
+    "category":"verb",
+    "label":0
+  },
+  {
+    "text":"سونا",
+    "translation":"To sleep",
+    "language":"urdu",
+    "category":"verb",
+    "label":0
+  },
+  {
+    "text":"پڑھنا",
+    "translation":"To read\/study",
+    "language":"urdu",
+    "category":"verb",
+    "label":0
+  },
+  {
+    "text":"لکھنا",
+    "translation":"To write",
+    "language":"urdu",
+    "category":"verb",
+    "label":0
+  },
+  {
+    "text":"بولنا",
+    "translation":"To speak",
+    "language":"urdu",
+    "category":"verb",
+    "label":0
+  },
+  {
+    "text":"سننا",
+    "translation":"To hear",
+    "language":"urdu",
+    "category":"verb",
+    "label":0
+  },
+  {
+    "text":"دیکھنا",
+    "translation":"To see\/watch",
+    "language":"urdu",
+    "category":"verb",
+    "label":0
+  },
+  {
+    "text":"سمجھنا",
+    "translation":"To understand",
+    "language":"urdu",
+    "category":"verb",
+    "label":0
+  },
+  {
+    "text":"کرنا",
+    "translation":"To do",
+    "language":"urdu",
+    "category":"verb",
+    "label":0
+  },
+  {
+    "text":"دینا",
+    "translation":"To give",
+    "language":"urdu",
+    "category":"verb",
+    "label":0
+  },
+  {
+    "text":"لینا",
+    "translation":"To take",
+    "language":"urdu",
+    "category":"verb",
+    "label":0
+  },
+  {
+    "text":"اچھا",
+    "translation":"Good",
+    "language":"urdu",
+    "category":"adjective",
+    "label":0
+  },
+  {
+    "text":"برا",
+    "translation":"Bad",
+    "language":"urdu",
+    "category":"adjective",
+    "label":0
+  },
+  {
+    "text":"بڑا",
+    "translation":"Big\/Large",
+    "language":"urdu",
+    "category":"adjective",
+    "label":0
+  },
+  {
+    "text":"چھوٹا",
+    "translation":"Small",
+    "language":"urdu",
+    "category":"adjective",
+    "label":0
+  },
+  {
+    "text":"نیا",
+    "translation":"New",
+    "language":"urdu",
+    "category":"adjective",
+    "label":0
+  },
+  {
+    "text":"پرانا",
+    "translation":"Old",
+    "language":"urdu",
+    "category":"adjective",
+    "label":0
+  },
+  {
+    "text":"خوبصورت",
+    "translation":"Beautiful",
+    "language":"urdu",
+    "category":"adjective",
+    "label":0
+  },
+  {
+    "text":"بدصورت",
+    "translation":"Ugly",
+    "language":"urdu",
+    "category":"adjective",
+    "label":0
+  },
+  {
+    "text":"تیز",
+    "translation":"Fast",
+    "language":"urdu",
+    "category":"adjective",
+    "label":0
+  },
+  {
+    "text":"سست",
+    "translation":"Slow",
+    "language":"urdu",
+    "category":"adjective",
+    "label":0
+  },
+  {
+    "text":"گرم",
+    "translation":"Hot",
+    "language":"urdu",
+    "category":"adjective",
+    "label":0
+  },
+  {
+    "text":"ٹھنڈا",
+    "translation":"Cold",
+    "language":"urdu",
+    "category":"adjective",
+    "label":0
+  },
+  {
+    "text":"خوش",
+    "translation":"Happy",
+    "language":"urdu",
+    "category":"emotion",
+    "label":0
+  },
+  {
+    "text":"غمگین",
+    "translation":"Sad",
+    "language":"urdu",
+    "category":"emotion",
+    "label":0
+  },
+  {
+    "text":"خوشی",
+    "translation":"Happiness",
+    "language":"urdu",
+    "category":"emotion",
+    "label":0
+  },
+  {
+    "text":"غم",
+    "translation":"Sorrow",
+    "language":"urdu",
+    "category":"emotion",
+    "label":0
+  },
+  {
+    "text":"پیار",
+    "translation":"Love",
+    "language":"urdu",
+    "category":"emotion",
+    "label":0
+  },
+  {
+    "text":"نفرت",
+    "translation":"Hate",
+    "language":"urdu",
+    "category":"emotion",
+    "label":0
+  },
+  {
+    "text":"خوف",
+    "translation":"Fear",
+    "language":"urdu",
+    "category":"emotion",
+    "label":0
+  },
+  {
+    "text":"غصہ",
+    "translation":"Anger",
+    "language":"urdu",
+    "category":"emotion",
+    "label":0
+  },
+  {
+    "text":"امید",
+    "translation":"Hope",
+    "language":"urdu",
+    "category":"emotion",
+    "label":0
+  },
+  {
+    "text":"مایوسی",
+    "translation":"Disappointment",
+    "language":"urdu",
+    "category":"emotion",
+    "label":0
+  },
+  {
+    "text":"سر",
+    "translation":"Head",
+    "language":"urdu",
+    "category":"body",
+    "label":0
+  },
+  {
+    "text":"آنکھ",
+    "translation":"Eye",
+    "language":"urdu",
+    "category":"body",
+    "label":0
+  },
+  {
+    "text":"کان",
+    "translation":"Ear",
+    "language":"urdu",
+    "category":"body",
+    "label":0
+  },
+  {
+    "text":"ناک",
+    "translation":"Nose",
+    "language":"urdu",
+    "category":"body",
+    "label":0
+  },
+  {
+    "text":"منہ",
+    "translation":"Mouth",
+    "language":"urdu",
+    "category":"body",
+    "label":0
+  },
+  {
+    "text":"ہاتھ",
+    "translation":"Hand",
+    "language":"urdu",
+    "category":"body",
+    "label":0
+  },
+  {
+    "text":"پاؤں",
+    "translation":"Foot",
+    "language":"urdu",
+    "category":"body",
+    "label":0
+  },
+  {
+    "text":"دل",
+    "translation":"Heart",
+    "language":"urdu",
+    "category":"body",
+    "label":0
+  },
+  {
+    "text":"پیٹ",
+    "translation":"Stomach",
+    "language":"urdu",
+    "category":"body",
+    "label":0
+  },
+  {
+    "text":"انگلی",
+    "translation":"Finger",
+    "language":"urdu",
+    "category":"body",
+    "label":0
+  },
+  {
+    "text":"تعلیم",
+    "translation":"Education",
+    "language":"urdu",
+    "category":"education",
+    "label":0
+  },
+  {
+    "text":"استاد",
+    "translation":"Teacher",
+    "language":"urdu",
+    "category":"education",
+    "label":0
+  },
+  {
+    "text":"طالب علم",
+    "translation":"Student",
+    "language":"urdu",
+    "category":"education",
+    "label":0
+  },
+  {
+    "text":"کتاب",
+    "translation":"Book",
+    "language":"urdu",
+    "category":"education",
+    "label":0
+  },
+  {
+    "text":"قلم",
+    "translation":"Pen",
+    "language":"urdu",
+    "category":"education",
+    "label":0
+  },
+  {
+    "text":"کاپی",
+    "translation":"Notebook",
+    "language":"urdu",
+    "category":"education",
+    "label":0
+  },
+  {
+    "text":"امتحان",
+    "translation":"Exam",
+    "language":"urdu",
+    "category":"education",
+    "label":0
+  },
+  {
+    "text":"سبق",
+    "translation":"Lesson",
+    "language":"urdu",
+    "category":"education",
+    "label":0
+  },
+  {
+    "text":"کلاس",
+    "translation":"Class",
+    "language":"urdu",
+    "category":"education",
+    "label":0
+  },
+  {
+    "text":"ہوم ورک",
+    "translation":"Homework",
+    "language":"urdu",
+    "category":"education",
+    "label":0
+  },
+  {
+    "text":"السلام علیکم",
+    "translation":"Hello",
+    "language":"punjabi",
+    "category":"greeting",
+    "label":1
+  },
+  {
+    "text":"ست سری اکال",
+    "translation":"Hello (Sikh greeting)",
+    "language":"punjabi",
+    "category":"greeting",
+    "label":1
+  },
+  {
+    "text":"کی حال اے؟",
+    "translation":"How are you?",
+    "language":"punjabi",
+    "category":"greeting",
+    "label":1
+  },
+  {
+    "text":"شکریہ",
+    "translation":"Thank you",
+    "language":"punjabi",
+    "category":"polite",
+    "label":1
+  },
+  {
+    "text":"معاف کرنا",
+    "translation":"Sorry\/Excuse me",
+    "language":"punjabi",
+    "category":"polite",
+    "label":1
+  },
+  {
+    "text":"مہربانی",
+    "translation":"Please",
+    "language":"punjabi",
+    "category":"polite",
+    "label":1
+  },
+  {
+    "text":"الوداع",
+    "translation":"Goodbye",
+    "language":"punjabi",
+    "category":"greeting",
+    "label":1
+  },
+  {
+    "text":"خدا حافظ",
+    "translation":"Goodbye",
+    "language":"punjabi",
+    "category":"greeting",
+    "label":1
+  },
+  {
+    "text":"ہاں",
+    "translation":"Yes",
+    "language":"punjabi",
+    "category":"response",
+    "label":1
+  },
+  {
+    "text":"نئیں",
+    "translation":"No",
+    "language":"punjabi",
+    "category":"response",
+    "label":1
+  },
+  {
+    "text":"ٹھیک اے",
+    "translation":"It's okay",
+    "language":"punjabi",
+    "category":"response",
+    "label":1
+  },
+  {
+    "text":"بلکل",
+    "translation":"Absolutely",
+    "language":"punjabi",
+    "category":"response",
+    "label":1
+  },
+  {
+    "text":"ہو سکدا اے",
+    "translation":"Maybe",
+    "language":"punjabi",
+    "category":"response",
+    "label":1
+  },
+  {
+    "text":"ماں",
+    "translation":"Mother",
+    "language":"punjabi",
+    "category":"family",
+    "label":1
+  },
+  {
+    "text":"ابا",
+    "translation":"Father",
+    "language":"punjabi",
+    "category":"family",
+    "label":1
+  },
+  {
+    "text":"بھرا",
+    "translation":"Brother",
+    "language":"punjabi",
+    "category":"family",
+    "label":1
+  },
+  {
+    "text":"بھین",
+    "translation":"Sister",
+    "language":"punjabi",
+    "category":"family",
+    "label":1
+  },
+  {
+    "text":"دادا",
+    "translation":"Grandfather",
+    "language":"punjabi",
+    "category":"family",
+    "label":1
+  },
+  {
+    "text":"دادی",
+    "translation":"Grandmother",
+    "language":"punjabi",
+    "category":"family",
+    "label":1
+  },
+  {
+    "text":"پتر",
+    "translation":"Son",
+    "language":"punjabi",
+    "category":"family",
+    "label":1
+  },
+  {
+    "text":"دھی",
+    "translation":"Daughter",
+    "language":"punjabi",
+    "category":"family",
+    "label":1
+  },
+  {
+    "text":"پروار",
+    "translation":"Family",
+    "language":"punjabi",
+    "category":"family",
+    "label":1
+  },
+  {
+    "text":"کھانا",
+    "translation":"Food",
+    "language":"punjabi",
+    "category":"food",
+    "label":1
+  },
+  {
+    "text":"پانی",
+    "translation":"Water",
+    "language":"punjabi",
+    "category":"food",
+    "label":1
+  },
+  {
+    "text":"دودھ",
+    "translation":"Milk",
+    "language":"punjabi",
+    "category":"food",
+    "label":1
+  },
+  {
+    "text":"چاہ",
+    "translation":"Tea",
+    "language":"punjabi",
+    "category":"food",
+    "label":1
+  },
+  {
+    "text":"روٹی",
+    "translation":"Bread",
+    "language":"punjabi",
+    "category":"food",
+    "label":1
+  },
+  {
+    "text":"چاول",
+    "translation":"Rice",
+    "language":"punjabi",
+    "category":"food",
+    "label":1
+  },
+  {
+    "text":"سبزی",
+    "translation":"Vegetable",
+    "language":"punjabi",
+    "category":"food",
+    "label":1
+  },
+  {
+    "text":"پھل",
+    "translation":"Fruit",
+    "language":"punjabi",
+    "category":"food",
+    "label":1
+  },
+  {
+    "text":"گوشت",
+    "translation":"Meat",
+    "language":"punjabi",
+    "category":"food",
+    "label":1
+  },
+  {
+    "text":"مچھی",
+    "translation":"Fish",
+    "language":"punjabi",
+    "category":"food",
+    "label":1
+  },
+  {
+    "text":"جانا",
+    "translation":"To go",
+    "language":"punjabi",
+    "category":"verb",
+    "label":1
+  },
+  {
+    "text":"آونا",
+    "translation":"To come",
+    "language":"punjabi",
+    "category":"verb",
+    "label":1
+  },
+  {
+    "text":"کھانا",
+    "translation":"To eat",
+    "language":"punjabi",
+    "category":"verb",
+    "label":1
+  },
+  {
+    "text":"پینا",
+    "translation":"To drink",
+    "language":"punjabi",
+    "category":"verb",
+    "label":1
+  },
+  {
+    "text":"سونا",
+    "translation":"To sleep",
+    "language":"punjabi",
+    "category":"verb",
+    "label":1
+  },
+  {
+    "text":"پڑھنا",
+    "translation":"To read",
+    "language":"punjabi",
+    "category":"verb",
+    "label":1
+  },
+  {
+    "text":"لکھنا",
+    "translation":"To write",
+    "language":"punjabi",
+    "category":"verb",
+    "label":1
+  },
+  {
+    "text":"بولنا",
+    "translation":"To speak",
+    "language":"punjabi",
+    "category":"verb",
+    "label":1
+  },
+  {
+    "text":"سننا",
+    "translation":"To hear",
+    "language":"punjabi",
+    "category":"verb",
+    "label":1
+  },
+  {
+    "text":"ویکھنا",
+    "translation":"To see",
+    "language":"punjabi",
+    "category":"verb",
+    "label":1
+  },
+  {
+    "text":"گھر",
+    "translation":"Home",
+    "language":"punjabi",
+    "category":"place",
+    "label":1
+  },
+  {
+    "text":"سکول",
+    "translation":"School",
+    "language":"punjabi",
+    "category":"place",
+    "label":1
+  },
+  {
+    "text":"دفتر",
+    "translation":"Office",
+    "language":"punjabi",
+    "category":"place",
+    "label":1
+  },
+  {
+    "text":"بازار",
+    "translation":"Market",
+    "language":"punjabi",
+    "category":"place",
+    "label":1
+  },
+  {
+    "text":"ہسپتال",
+    "translation":"Hospital",
+    "language":"punjabi",
+    "category":"place",
+    "label":1
+  },
+  {
+    "text":"مسیت",
+    "translation":"Mosque",
+    "language":"punjabi",
+    "category":"place",
+    "label":1
+  },
+  {
+    "text":"پنڈ",
+    "translation":"Village",
+    "language":"punjabi",
+    "category":"place",
+    "label":1
+  },
+  {
+    "text":"شہر",
+    "translation":"City",
+    "language":"punjabi",
+    "category":"place",
+    "label":1
+  },
+  {
+    "text":"اک",
+    "translation":"One",
+    "language":"punjabi",
+    "category":"number",
+    "label":1
+  },
+  {
+    "text":"دو",
+    "translation":"Two",
+    "language":"punjabi",
+    "category":"number",
+    "label":1
+  },
+  {
+    "text":"تن",
+    "translation":"Three",
+    "language":"punjabi",
+    "category":"number",
+    "label":1
+  },
+  {
+    "text":"چار",
+    "translation":"Four",
+    "language":"punjabi",
+    "category":"number",
+    "label":1
+  },
+  {
+    "text":"پنج",
+    "translation":"Five",
+    "language":"punjabi",
+    "category":"number",
+    "label":1
+  },
+  {
+    "text":"چھے",
+    "translation":"Six",
+    "language":"punjabi",
+    "category":"number",
+    "label":1
+  },
+  {
+    "text":"ست",
+    "translation":"Seven",
+    "language":"punjabi",
+    "category":"number",
+    "label":1
+  },
+  {
+    "text":"اٹھ",
+    "translation":"Eight",
+    "language":"punjabi",
+    "category":"number",
+    "label":1
+  },
+  {
+    "text":"نو",
+    "translation":"Nine",
+    "language":"punjabi",
+    "category":"number",
+    "label":1
+  },
+  {
+    "text":"دس",
+    "translation":"Ten",
+    "language":"punjabi",
+    "category":"number",
+    "label":1
+  },
+  {
+    "text":"رنگ",
+    "translation":"Color",
+    "language":"punjabi",
+    "category":"color",
+    "label":1
+  },
+  {
+    "text":"چٹا",
+    "translation":"White",
+    "language":"punjabi",
+    "category":"color",
+    "label":1
+  },
+  {
+    "text":"کالا",
+    "translation":"Black",
+    "language":"punjabi",
+    "category":"color",
+    "label":1
+  },
+  {
+    "text":"لال",
+    "translation":"Red",
+    "language":"punjabi",
+    "category":"color",
+    "label":1
+  },
+  {
+    "text":"نیلا",
+    "translation":"Blue",
+    "language":"punjabi",
+    "category":"color",
+    "label":1
+  },
+  {
+    "text":"ہرا",
+    "translation":"Green",
+    "language":"punjabi",
+    "category":"color",
+    "label":1
+  },
+  {
+    "text":"پیلا",
+    "translation":"Yellow",
+    "language":"punjabi",
+    "category":"color",
+    "label":1
+  },
+  {
+    "text":"ویلا",
+    "translation":"Time",
+    "language":"punjabi",
+    "category":"time",
+    "label":1
+  },
+  {
+    "text":"دن",
+    "translation":"Day",
+    "language":"punjabi",
+    "category":"time",
+    "label":1
+  },
+  {
+    "text":"رات",
+    "translation":"Night",
+    "language":"punjabi",
+    "category":"time",
+    "label":1
+  },
+  {
+    "text":"سویر",
+    "translation":"Morning",
+    "language":"punjabi",
+    "category":"time",
+    "label":1
+  },
+  {
+    "text":"دوپہر",
+    "translation":"Afternoon",
+    "language":"punjabi",
+    "category":"time",
+    "label":1
+  },
+  {
+    "text":"شام",
+    "translation":"Evening",
+    "language":"punjabi",
+    "category":"time",
+    "label":1
+  },
+  {
+    "text":"اج",
+    "translation":"Today",
+    "language":"punjabi",
+    "category":"time",
+    "label":1
+  },
+  {
+    "text":"کل",
+    "translation":"Yesterday\/Tomorrow",
+    "language":"punjabi",
+    "category":"time",
+    "label":1
+  },
+  {
+    "text":"سر",
+    "translation":"Head",
+    "language":"punjabi",
+    "category":"body",
+    "label":1
+  },
+  {
+    "text":"اکھ",
+    "translation":"Eye",
+    "language":"punjabi",
+    "category":"body",
+    "label":1
+  },
+  {
+    "text":"کن",
+    "translation":"Ear",
+    "language":"punjabi",
+    "category":"body",
+    "label":1
+  },
+  {
+    "text":"نک",
+    "translation":"Nose",
+    "language":"punjabi",
+    "category":"body",
+    "label":1
+  },
+  {
+    "text":"منہ",
+    "translation":"Mouth",
+    "language":"punjabi",
+    "category":"body",
+    "label":1
+  },
+  {
+    "text":"ہتھ",
+    "translation":"Hand",
+    "language":"punjabi",
+    "category":"body",
+    "label":1
+  },
+  {
+    "text":"پیر",
+    "translation":"Foot",
+    "language":"punjabi",
+    "category":"body",
+    "label":1
+  },
+  {
+    "text":"خوش",
+    "translation":"Happy",
+    "language":"punjabi",
+    "category":"emotion",
+    "label":1
+  },
+  {
+    "text":"دکھی",
+    "translation":"Sad",
+    "language":"punjabi",
+    "category":"emotion",
+    "label":1
+  },
+  {
+    "text":"پیار",
+    "translation":"Love",
+    "language":"punjabi",
+    "category":"emotion",
+    "label":1
+  },
+  {
+    "text":"غصہ",
+    "translation":"Anger",
+    "language":"punjabi",
+    "category":"emotion",
+    "label":1
+  },
+  {
+    "text":"ڈر",
+    "translation":"Fear",
+    "language":"punjabi",
+    "category":"emotion",
+    "label":1
+  },
+  {
+    "text":"میں اچھا ہوں",
+    "translation":"I am fine",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"آپ کا نام کیا ہے؟",
+    "translation":"What is your name?",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میرا نام احمد ہے",
+    "translation":"My name is Ahmad",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں پاکستان سے ہوں",
+    "translation":"I am from Pakistan",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"آپ کہاں رہتے ہیں؟",
+    "translation":"Where do you live?",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں کراچی میں رہتا ہوں",
+    "translation":"I live in Karachi",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"مجھے اردو پسند ہے",
+    "translation":"I like Urdu",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"کیا آپ اردو بولتے ہیں؟",
+    "translation":"Do you speak Urdu?",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"ہاں، میں اردو بولتا ہوں",
+    "translation":"Yes, I speak Urdu",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"مجھے سمجھ نہیں آیا",
+    "translation":"I didn't understand",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"براہ کرم دوبارہ کہیں",
+    "translation":"Please say again",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"آپ کی مدد کے لیے شکریہ",
+    "translation":"Thank you for your help",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"کوئی مسئلہ نہیں",
+    "translation":"No problem",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں تھکا ہوا ہوں",
+    "translation":"I am tired",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں بھوکا ہوں",
+    "translation":"I am hungry",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں پیاسا ہوں",
+    "translation":"I am thirsty",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"موسم بہت اچھا ہے",
+    "translation":"The weather is very nice",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"آج بہت گرمی ہے",
+    "translation":"It's very hot today",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"کل بارش ہوئی تھی",
+    "translation":"It rained yesterday",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں کتاب پڑھ رہا ہوں",
+    "translation":"I am reading a book",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"وہ اسکول جا رہی ہے",
+    "translation":"She is going to school",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"ہم کھانا کھا رہے ہیں",
+    "translation":"We are eating food",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"وہ لوگ کام کر رہے ہیں",
+    "translation":"They are working",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں نے کھانا کھایا",
+    "translation":"I ate food",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"اس نے پانی پیا",
+    "translation":"He\/She drank water",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"ہم نے فلم دیکھی",
+    "translation":"We watched a movie",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"انہوں نے گانا سنا",
+    "translation":"They listened to a song",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں کل جاؤں گا",
+    "translation":"I will go tomorrow",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"وہ اگلے ہفتے آئے گا",
+    "translation":"He will come next week",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"ہم پارک میں کھیلیں گے",
+    "translation":"We will play in the park",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"یہ میری کتاب ہے",
+    "translation":"This is my book",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"وہ اس کا قلم ہے",
+    "translation":"That is his\/her pen",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"یہ بہت خوبصورت ہے",
+    "translation":"This is very beautiful",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"وہ بہت مہنگا ہے",
+    "translation":"That is very expensive",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"مجھے یہ پسند ہے",
+    "translation":"I like this",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"مجھے یہ پسند نہیں",
+    "translation":"I don't like this",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"کیا آپ مجھے مدد کر سکتے ہیں؟",
+    "translation":"Can you help me?",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں آپ کی مدد کروں گا",
+    "translation":"I will help you",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"وقت کیا ہوا ہے؟",
+    "translation":"What time is it?",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"اب تین بجے ہیں",
+    "translation":"It's three o'clock now",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میرے پاس وقت نہیں ہے",
+    "translation":"I don't have time",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں دیر سے آیا ہوں",
+    "translation":"I came late",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"براہ کرم جلدی کریں",
+    "translation":"Please hurry up",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں جلدی میں ہوں",
+    "translation":"I am in a hurry",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"آرام سے",
+    "translation":"Take it easy\/Relax",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"کوئی جلدی نہیں ہے",
+    "translation":"There's no hurry",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں آپ سے محبت کرتا ہوں",
+    "translation":"I love you",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"مجھے آپ پسند ہیں",
+    "translation":"I like you",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"آپ بہت اچھے ہیں",
+    "translation":"You are very good",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"آپ بہت مہربان ہیں",
+    "translation":"You are very kind",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"یہ میرا گھر ہے",
+    "translation":"This is my house",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"وہ میری کار ہے",
+    "translation":"That is my car",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میرے پاس موبائل فون ہے",
+    "translation":"I have a mobile phone",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"اس کے پاس کمپیوٹر ہے",
+    "translation":"He\/She has a computer",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں روزانہ ورزش کرتا ہوں",
+    "translation":"I exercise daily",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"وہ صبح سویرے اٹھتی ہے",
+    "translation":"She wakes up early in the morning",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"ہم رات کو سوتے ہیں",
+    "translation":"We sleep at night",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں اردو سیکھ رہا ہوں",
+    "translation":"I am learning Urdu",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"وہ انگریزی پڑھ رہا ہے",
+    "translation":"He is studying English",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"یہ بہت آسان ہے",
+    "translation":"This is very easy",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"وہ بہت مشکل ہے",
+    "translation":"That is very difficult",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں سمجھ گیا",
+    "translation":"I understood",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"مجھے یاد ہے",
+    "translation":"I remember",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں بھول گیا",
+    "translation":"I forgot",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"آپ کو یاد ہے؟",
+    "translation":"Do you remember?",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں نے دیکھا",
+    "translation":"I saw",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں نے سنا",
+    "translation":"I heard",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"کیا آپ نے دیکھا؟",
+    "translation":"Did you see?",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"کیا آپ نے سنا؟",
+    "translation":"Did you hear?",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں آپ کو ڈھونڈ رہا تھا",
+    "translation":"I was looking for you",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"آپ کہاں تھے؟",
+    "translation":"Where were you?",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں گھر پر تھا",
+    "translation":"I was at home",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"وہ دفتر میں تھا",
+    "translation":"He was in the office",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"ہم باہر تھے",
+    "translation":"We were outside",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"بچے کھیل رہے تھے",
+    "translation":"Children were playing",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں کام کر رہا تھا",
+    "translation":"I was working",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"وہ سو رہی تھی",
+    "translation":"She was sleeping",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"آج میری چھٹی ہے",
+    "translation":"Today is my holiday",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"کل اتوار ہے",
+    "translation":"Tomorrow is Sunday",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"آج کا دن اچھا ہے",
+    "translation":"Today is a good day",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"موسم خوشگوار ہے",
+    "translation":"The weather is pleasant",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"بارش ہو رہی ہے",
+    "translation":"It is raining",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"ہوا چل رہی ہے",
+    "translation":"Wind is blowing",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"سورج نکل آیا ہے",
+    "translation":"The sun has come out",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"چاند نکل آیا ہے",
+    "translation":"The moon has come out",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"تارے چمک رہے ہیں",
+    "translation":"Stars are shining",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"رات بہت خوبصورت ہے",
+    "translation":"The night is very beautiful",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں آپ سے ملنا چاہتا ہوں",
+    "translation":"I want to meet you",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"آپ کب آئیں گے؟",
+    "translation":"When will you come?",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں جلد آؤں گا",
+    "translation":"I will come soon",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"انتظار کریں",
+    "translation":"Please wait",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں تیار ہو رہا ہوں",
+    "translation":"I am getting ready",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"ابھی چلتے ہیں",
+    "translation":"Let's go now",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"دیر ہو رہی ہے",
+    "translation":"It's getting late",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"جلدی کرو",
+    "translation":"Hurry up",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"آہستہ چلو",
+    "translation":"Walk slowly",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"یہاں بیٹھو",
+    "translation":"Sit here",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"وہاں کھڑے ہو",
+    "translation":"Stand there",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"اندر آجائیں",
+    "translation":"Please come in",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"باہر جائیں",
+    "translation":"Please go out",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"دروازہ کھولو",
+    "translation":"Open the door",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"دروازہ بند کرو",
+    "translation":"Close the door",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"لائٹ آن کرو",
+    "translation":"Turn on the light",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"لائٹ آف کرو",
+    "translation":"Turn off the light",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"آواز بلند کرو",
+    "translation":"Increase the volume",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"آواز کم کرو",
+    "translation":"Decrease the volume",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"خاموش رہو",
+    "translation":"Be quiet",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"شور مت کرو",
+    "translation":"Don't make noise",
+    "language":"urdu",
+    "category":"sentence",
+    "label":0
+  },
+  {
+    "text":"میں ٹھیک آں",
+    "translation":"I am fine",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"تسی کیہ کر رئے او؟",
+    "translation":"What are you doing?",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں کھانا کھا رہیا آں",
+    "translation":"I am eating food",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"تہانوں کی چاہیدا اے؟",
+    "translation":"What do you need?",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میںنوں پانی چاہیدا اے",
+    "translation":"I need water",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"تسی کتھوں آئے او؟",
+    "translation":"Where did you come from?",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں لہور توں آیا آں",
+    "translation":"I came from Lahore",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"تسی کتھے جا رئے او؟",
+    "translation":"Where are you going?",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں گھر جا رہیا آں",
+    "translation":"I am going home",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"کی گل اے؟",
+    "translation":"What's the matter?",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"کج نئیں",
+    "translation":"Nothing",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"سب ٹھیک اے",
+    "translation":"Everything is fine",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"تہاڈا کی حال اے؟",
+    "translation":"How are you?",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں بہت خوش آں",
+    "translation":"I am very happy",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں دکھی آں",
+    "translation":"I am sad",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں تھکیا ہویا آں",
+    "translation":"I am tired",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں بھکھا آں",
+    "translation":"I am hungry",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میںنوں نیند آ رئی اے",
+    "translation":"I am feeling sleepy",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"موسم بہت سوہنا اے",
+    "translation":"The weather is very nice",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"اج بہت گرمی اے",
+    "translation":"It's very hot today",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"کل مینہہ پیا سی",
+    "translation":"It rained yesterday",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں کتاب پڑھ رہیا آں",
+    "translation":"I am reading a book",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"او سکول جا رئی اے",
+    "translation":"She is going to school",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"اسیں کھانا کھا رئے آں",
+    "translation":"We are eating food",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"او لوگ کم کر رئے نے",
+    "translation":"They are working",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں نے کھانا کھادا",
+    "translation":"I ate food",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"اس نے پانی پیتا",
+    "translation":"He\/She drank water",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"اسیں فلم ویکھی",
+    "translation":"We watched a movie",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"اناں نے گانا سنیا",
+    "translation":"They listened to a song",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں کل جاواں گا",
+    "translation":"I will go tomorrow",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"او اگلے ہفتے آویگا",
+    "translation":"He will come next week",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"اسیں پارک وچ کھیڈاں گے",
+    "translation":"We will play in the park",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"ایہہ میری کتاب اے",
+    "translation":"This is my book",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"او اس دا قلم اے",
+    "translation":"That is his\/her pen",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"ایہہ بہت سوہنا اے",
+    "translation":"This is very beautiful",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"او بہت مہنگا اے",
+    "translation":"That is very expensive",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میںنوں ایہہ پسند اے",
+    "translation":"I like this",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میںنوں ایہہ پسند نئیں",
+    "translation":"I don't like this",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"کی تسی میری مدد کر سکدے او؟",
+    "translation":"Can you help me?",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں تہاڈی مدد کراں گا",
+    "translation":"I will help you",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"ویلا کی ہویا اے؟",
+    "translation":"What time is it?",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"ہن تن وجے نے",
+    "translation":"It's three o'clock now",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میرے کول ویلا نئیں اے",
+    "translation":"I don't have time",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں دیر نال آیا آں",
+    "translation":"I came late",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"مہربانی کر کے جلدی کرو",
+    "translation":"Please hurry up",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں جلدی وچ آں",
+    "translation":"I am in a hurry",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"آرام نال",
+    "translation":"Take it easy",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"کوئی جلدی نئیں اے",
+    "translation":"There's no hurry",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں تہانوں پیار کردا آں",
+    "translation":"I love you",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میںنوں تسی پسند او",
+    "translation":"I like you",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"تسی بہت چنگے او",
+    "translation":"You are very good",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"تسی بہت مہربان او",
+    "translation":"You are very kind",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"ایہہ میرا گھر اے",
+    "translation":"This is my house",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"او میری گڈی اے",
+    "translation":"That is my car",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میرے کول موبائل اے",
+    "translation":"I have a mobile phone",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"اس کول کمپیوٹر اے",
+    "translation":"He\/She has a computer",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں روز ورزش کردا آں",
+    "translation":"I exercise daily",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"او سویرے اٹھدی اے",
+    "translation":"She wakes up early",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"اسیں رات نوں سوندے آں",
+    "translation":"We sleep at night",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں پنجابی سکھ رہیا آں",
+    "translation":"I am learning Punjabi",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"او انگریزی پڑھ رہیا اے",
+    "translation":"He is studying English",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"ایہہ بہت اوکھا اے",
+    "translation":"This is very easy",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"او بہت مشکل اے",
+    "translation":"That is very difficult",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں سمجھ گیا",
+    "translation":"I understood",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میںنوں یاد اے",
+    "translation":"I remember",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں بھل گیا",
+    "translation":"I forgot",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"تہانوں یاد اے؟",
+    "translation":"Do you remember?",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں نے ویکھیا",
+    "translation":"I saw",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں نے سنیا",
+    "translation":"I heard",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"کی تسی نے ویکھیا؟",
+    "translation":"Did you see?",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"کی تسی نے سنیا؟",
+    "translation":"Did you hear?",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں تہانوں ڈھونڈ رہیا سی",
+    "translation":"I was looking for you",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"تسی کتھے سی؟",
+    "translation":"Where were you?",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں گھر تے سی",
+    "translation":"I was at home",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"او دفتر وچ سی",
+    "translation":"He was in the office",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"اسیں باہر سی",
+    "translation":"We were outside",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"بچے کھیڈ رئے سن",
+    "translation":"Children were playing",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں کم کر رہیا سی",
+    "translation":"I was working",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"او سوئی ہوئی سی",
+    "translation":"She was sleeping",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"اج میری چھٹی اے",
+    "translation":"Today is my holiday",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"کل اتوار اے",
+    "translation":"Tomorrow is Sunday",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"اج دا دن چنگا اے",
+    "translation":"Today is a good day",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"موسم خوشگوار اے",
+    "translation":"The weather is pleasant",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"مینہہ پے رہیا اے",
+    "translation":"It is raining",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"ہوا چل رئی اے",
+    "translation":"Wind is blowing",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"سورج نکل آیا اے",
+    "translation":"The sun has come out",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"چن نکل آیا اے",
+    "translation":"The moon has come out",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"تارے چمک رئے نے",
+    "translation":"Stars are shining",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"رات بہت سوہنی اے",
+    "translation":"The night is very beautiful",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں تہانوں ملنا چاہنا آں",
+    "translation":"I want to meet you",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"تسی کدوں آوگے؟",
+    "translation":"When will you come?",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں جلدی آواں گا",
+    "translation":"I will come soon",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"انتظار کرو",
+    "translation":"Please wait",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"میں تیار ہو رہیا آں",
+    "translation":"I am getting ready",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"ہن چلدے آں",
+    "translation":"Let's go now",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"دیر ہو رئی اے",
+    "translation":"It's getting late",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"جلدی کرو",
+    "translation":"Hurry up",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"اہستہ چلو",
+    "translation":"Walk slowly",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"ایتھے بیٹھو",
+    "translation":"Sit here",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"اوتھے کھلو",
+    "translation":"Stand there",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"اندر آ جاؤ",
+    "translation":"Please come in",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"باہر جاؤ",
+    "translation":"Please go out",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"دروازہ کھولو",
+    "translation":"Open the door",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  },
+  {
+    "text":"دروازہ بند کرو",
+    "translation":"Close the door",
+    "language":"punjabi",
+    "category":"sentence",
+    "label":1
+  }
+]

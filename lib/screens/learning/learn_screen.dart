@@ -6,7 +6,7 @@ import '../../providers/user_provider.dart';
 import 'chapter_detail_screen.dart';
 
 class LearnScreen extends StatelessWidget {
-  const LearnScreen({Key? key}) : super(key: key);
+  const LearnScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -134,11 +134,11 @@ class ChapterNode extends StatelessWidget {
   final String language;
 
   const ChapterNode({
-    Key? key,
+    super.key,
     required this.chapter,
     required this.chapterNumber,
     required this.language,
-  }) : super(key: key);
+  });
 
   Color _getProgressColor(double progress) {
     if (progress == 0) return Colors.grey;
@@ -172,9 +172,29 @@ class ChapterNode extends StatelessWidget {
           ? null
           : () {
               Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) =>
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
                       ChapterDetailScreen(chapter: chapter, language: language),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                        const begin = Offset(1.0, 0.0);
+                        const end = Offset.zero;
+                        const curve = Curves.easeInOut;
+
+                        var tween = Tween(
+                          begin: begin,
+                          end: end,
+                        ).chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          ),
+                        );
+                      },
+                  transitionDuration: const Duration(milliseconds: 400),
                 ),
               );
             },
@@ -246,6 +266,18 @@ class ChapterNode extends StatelessWidget {
                       color: isLocked ? Colors.grey : Colors.black,
                     ),
                   ),
+                  const SizedBox(height: 4),
+                  Text(
+                    chapter.description,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: isLocked
+                          ? Colors.grey.shade400
+                          : Colors.grey.shade700,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   const SizedBox(height: 8),
                   Row(
                     children: [
@@ -310,7 +342,7 @@ class ChapterNode extends StatelessWidget {
 
 // Path connector between chapters
 class PathConnector extends StatelessWidget {
-  const PathConnector({Key? key}) : super(key: key);
+  const PathConnector({super.key});
 
   @override
   Widget build(BuildContext context) {

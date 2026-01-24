@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
 import '../../themes/app_theme.dart';
 import '../../providers/user_provider.dart';
 import '../../providers/gamification_provider.dart';
@@ -7,13 +10,66 @@ import '../../providers/theme_provider.dart';
 import '../../services/firebase_service.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final ImagePicker _picker = ImagePicker();
+  bool _isUploadingImage = false;
+
+  Future<void> _pickAndUploadImage() async {
+    try {
+      final XFile? image = await _picker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 512,
+        maxHeight: 512,
+        imageQuality: 75,
+      );
+
+      if (image == null) return;
+
+      setState(() => _isUploadingImage = true);
+
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final userId = userProvider.currentUser!.id;
+
+      // Upload to Firebase Storage
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('profile_pictures')
+          .child('$userId.jpg');
+
+      await storageRef.putFile(File(image.path));
+      final downloadUrl = await storageRef.getDownloadURL();
+
+      // Update user profile
+      await userProvider.updateProfileImage(downloadUrl);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Profile picture updated successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to upload image: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      setState(() => _isUploadingImage = false);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -71,28 +127,132 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 32),
                       child: Column(
                         children: [
-                          // Avatar
-                          Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              color: AppTheme.accentGreen,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: AppTheme.white,
-                                width: 4,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                userProvider.currentUser!.name[0].toUpperCase(),
-                                style: const TextStyle(
-                                  fontSize: 50,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppTheme.white,
+                          // Avatar with Upload Button
+                          Stack(
+                            children: [
+                              Container(
+                                width: 120,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: AppTheme.white,
+                                    width: 4,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 10,
+                                      offset: const Offset(0, 5),
+                                    ),
+                                  ],
+                                ),
+                                child: ClipOval(
+                                  child:
+                                      userProvider
+                                              .currentUser!
+                                              .profileImageUrl !=
+                                          null
+                                      ? Image.network(
+                                          userProvider
+                                              .currentUser!
+                                              .profileImageUrl!,
+                                          fit: BoxFit.cover,
+                                          loadingBuilder:
+                                              (
+                                                context,
+                                                child,
+                                                loadingProgress,
+                                              ) {
+                                                if (loadingProgress == null)
+                                                  return child;
+                                                return Container(
+                                                  color: AppTheme.accentGreen,
+                                                  child: const Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                          color: Colors.white,
+                                                          strokeWidth: 2,
+                                                        ),
+                                                  ),
+                                                );
+                                              },
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                                return Container(
+                                                  color: AppTheme.accentGreen,
+                                                  child: Center(
+                                                    child: Text(
+                                                      userProvider
+                                                          .currentUser!
+                                                          .name[0]
+                                                          .toUpperCase(),
+                                                      style: const TextStyle(
+                                                        fontSize: 50,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: AppTheme.white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                        )
+                                      : Container(
+                                          color: AppTheme.accentGreen,
+                                          child: Center(
+                                            child: Text(
+                                              userProvider.currentUser!.name[0]
+                                                  .toUpperCase(),
+                                              style: const TextStyle(
+                                                fontSize: 50,
+                                                fontWeight: FontWeight.bold,
+                                                color: AppTheme.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                 ),
                               ),
-                            ),
+                              // Edit Button
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: GestureDetector(
+                                  onTap: _isUploadingImage
+                                      ? null
+                                      : _pickAndUploadImage,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.2),
+                                          blurRadius: 5,
+                                          offset: const Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    child: _isUploadingImage
+                                        ? const SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                              color: AppTheme.primaryGreen,
+                                            ),
+                                          )
+                                        : const Icon(
+                                            Icons.camera_alt,
+                                            color: AppTheme.primaryGreen,
+                                            size: 20,
+                                          ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 16),
                           Text(
@@ -439,7 +599,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onChanged: (value) {
               themeProvider.toggleTheme();
             },
-            activeColor: AppTheme.primaryGreen,
+            activeThumbColor: AppTheme.primaryGreen,
           ),
         );
       },

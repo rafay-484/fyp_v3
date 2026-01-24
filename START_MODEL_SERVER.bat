@@ -20,6 +20,7 @@ echo Current directory: %CD%
 echo.
 
 cd ml_model
+call venv\Scripts\activate.bat
 python model_api.py
 
 pause

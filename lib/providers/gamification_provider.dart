@@ -20,7 +20,7 @@ class GamificationProvider extends ChangeNotifier {
   int _totalPoints = 0;
   int _currentLevel = 1;
   int _pointsForNextLevel = 100;
-  List<Badge> _unlockedBadges = [];
+  final List<Badge> _unlockedBadges = [];
   int _streak = 0;
   int _currentStreak = 0;
   DateTime? _lastActiveDate;

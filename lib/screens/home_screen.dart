@@ -8,7 +8,7 @@ import 'profile/profile_screen.dart';
 import 'learning/leaderboard_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -44,17 +44,24 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         backgroundColor: AppTheme.primaryGreen,
         actions: [
-          // Streak Counter
+          // Streak Counter with animation
           Consumer<GamificationProvider>(
             builder: (context, gamification, _) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
                   children: [
-                    const Icon(
-                      Icons.local_fire_department,
-                      color: Colors.orange,
-                      size: 24,
+                    TweenAnimationBuilder<double>(
+                      tween: Tween(begin: 0.8, end: 1.0),
+                      duration: const Duration(milliseconds: 300),
+                      builder: (context, scale, child) {
+                        return Transform.scale(scale: scale, child: child);
+                      },
+                      child: const Icon(
+                        Icons.local_fire_department,
+                        color: Colors.orange,
+                        size: 24,
+                      ),
                     ),
                     const SizedBox(width: 4),
                     Text(
@@ -70,21 +77,31 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           ),
-          // XP Points
+          // XP Points with hero animation
           Consumer<GamificationProvider>(
             builder: (context, gamification, _) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
                   children: [
-                    const Icon(Icons.stars, color: Colors.amber),
+                    Hero(
+                      tag: 'xp_icon',
+                      child: const Icon(Icons.stars, color: Colors.amber),
+                    ),
                     const SizedBox(width: 4),
-                    Text(
-                      '${gamification.totalPoints}',
-                      style: const TextStyle(
-                        color: AppTheme.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      transitionBuilder: (child, animation) {
+                        return ScaleTransition(scale: animation, child: child);
+                      },
+                      child: Text(
+                        '${gamification.totalPoints}',
+                        key: ValueKey(gamification.totalPoints),
+                        style: const TextStyle(
+                          color: AppTheme.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ],
@@ -94,7 +111,22 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: _screens[_selectedIndex],
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        transitionBuilder: (child, animation) {
+          return FadeTransition(
+            opacity: animation,
+            child: SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(0.1, 0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            ),
+          );
+        },
+        child: _screens[_selectedIndex],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: (index) {

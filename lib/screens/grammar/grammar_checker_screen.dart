@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../themes/app_theme.dart';
 
 class GrammarCheckerScreen extends StatefulWidget {
-  const GrammarCheckerScreen({Key? key}) : super(key: key);
+  const GrammarCheckerScreen({super.key});
 
   @override
   State<GrammarCheckerScreen> createState() => _GrammarCheckerScreenState();

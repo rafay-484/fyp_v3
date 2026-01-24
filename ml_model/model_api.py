@@ -14,7 +14,9 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS for Flutter app
 
 # Load model at startup with memory optimization
-MODEL_PATH = "trained_model/xlm_roberta_urdu_punjabi"
+# Get the directory where this script is located
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(SCRIPT_DIR, "trained_model", "xlm_roberta_urdu_punjabi")
 print(f"Loading model from {MODEL_PATH}...")
 
 # Clear memory before loading
@@ -356,4 +358,4 @@ def transliterate(text, language):
 if __name__ == '__main__':
     # Run on localhost:5000
     # For production, use a proper WSGI server like gunicorn
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=False)

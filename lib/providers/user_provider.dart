@@ -6,6 +6,7 @@ class User {
   final String id;
   final String email;
   final String name;
+  final String? profileImageUrl;
   final String selectedLanguage; // 'urdu', 'punjabi'
   final int points;
   final int level;
@@ -16,6 +17,7 @@ class User {
     required this.id,
     required this.email,
     required this.name,
+    this.profileImageUrl,
     this.selectedLanguage = 'urdu',
     this.points = 0,
     this.level = 1,
@@ -50,19 +52,36 @@ class UserProvider extends ChangeNotifier {
 
         if (userDoc.exists) {
           final data = userDoc.data()!;
+          final emailPrefix = firebaseUser.email?.split('@')[0] ?? 'User';
+
           _currentUser = User(
             id: firebaseUser.uid,
             email: firebaseUser.email ?? '',
-            name:
-                data['displayName'] ??
-                firebaseUser.email?.split('@')[0] ??
-                'User',
+            name: data['displayName'] ?? emailPrefix,
+            profileImageUrl: data['profileImageUrl'],
             selectedLanguage: data['selectedLanguage'] ?? 'urdu',
-            points: data['totalXP'] ?? 0,
-            level: ((data['totalXP'] ?? 0) / 100).floor() + 1,
+            points: (data['totalXP'] ?? data['totalPoints'] ?? 0) as int,
+            level:
+                data['currentLevel'] ??
+                ((data['totalXP'] ?? 0) / 100).floor() + 1,
             unlockedBadges: List<String>.from(data['unlockedBadges'] ?? []),
             createdAt:
                 (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+          );
+          _isAuthenticated = true;
+          notifyListeners();
+        } else {
+          // User doc doesn't exist, create basic user object
+          _currentUser = User(
+            id: firebaseUser.uid,
+            email: firebaseUser.email ?? '',
+            name: firebaseUser.email?.split('@')[0] ?? 'User',
+            profileImageUrl: null,
+            selectedLanguage: 'urdu',
+            points: 0,
+            level: 1,
+            unlockedBadges: [],
+            createdAt: DateTime.now(),
           );
           _isAuthenticated = true;
           notifyListeners();
@@ -79,12 +98,37 @@ class UserProvider extends ChangeNotifier {
         id: _currentUser!.id,
         email: _currentUser!.email,
         name: _currentUser!.name,
+        profileImageUrl: _currentUser!.profileImageUrl,
         selectedLanguage: language,
         points: _currentUser!.points,
         level: _currentUser!.level,
         unlockedBadges: _currentUser!.unlockedBadges,
         createdAt: _currentUser!.createdAt,
       );
+      notifyListeners();
+    }
+  }
+
+  Future<void> updateProfileImage(String imageUrl) async {
+    if (_currentUser != null) {
+      _currentUser = User(
+        id: _currentUser!.id,
+        email: _currentUser!.email,
+        name: _currentUser!.name,
+        profileImageUrl: imageUrl,
+        selectedLanguage: _currentUser!.selectedLanguage,
+        points: _currentUser!.points,
+        level: _currentUser!.level,
+        unlockedBadges: _currentUser!.unlockedBadges,
+        createdAt: _currentUser!.createdAt,
+      );
+
+      // Update Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_currentUser!.id)
+          .update({'profileImageUrl': imageUrl});
+
       notifyListeners();
     }
   }

@@ -5,7 +5,7 @@ import '../../themes/app_theme.dart';
 import '../../services/firebase_service.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
-  const EmailVerificationScreen({Key? key}) : super(key: key);
+  const EmailVerificationScreen({super.key});
 
   @override
   State<EmailVerificationScreen> createState() =>
@@ -245,29 +245,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
-
-              // Manual check button
-              SizedBox(
-                width: double.infinity,
-                child: OutlinedButton.icon(
-                  onPressed: _checkEmailVerification,
-                  icon: const Icon(Icons.check_circle_outline),
-                  label: const Text(
-                    'I\'ve Verified My Email',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: AppTheme.primaryGreen,
-                    side: const BorderSide(color: AppTheme.primaryGreen),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
 
               // Back to Login button
               TextButton(

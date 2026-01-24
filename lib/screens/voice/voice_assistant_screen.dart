@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../themes/app_theme.dart';
 
 class VoiceAssistantScreen extends StatefulWidget {
-  const VoiceAssistantScreen({Key? key}) : super(key: key);
+  const VoiceAssistantScreen({super.key});
 
   @override
   State<VoiceAssistantScreen> createState() => _VoiceAssistantScreenState();

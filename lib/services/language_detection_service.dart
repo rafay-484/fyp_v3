@@ -4,54 +4,64 @@ import 'dart:convert';
 
 /// Service for detecting language (Urdu vs Punjabi) using trained XLM-RoBERTa model
 class LanguageDetectionService {
-  // For production, you would deploy the model to a server
-  // For now, we'll use a simple rule-based approach as a fallback
-  // until you set up a model inference endpoint
-
+  // Using Hugging Face Inference API
+  static const String _huggingFaceModel = 'RAFAY-484/Urdu-Punjabi';
   static const String _apiEndpoint =
-      'http://127.0.0.1:5000/detect'; // XLM-RoBERTa model API
+      'https://api-inference.huggingface.co/models/$_huggingFaceModel';
 
   /// Detect if text is Urdu (0) or Punjabi (1)
   Future<LanguageDetectionResult> detectLanguage(String text) async {
     try {
-      // If you have a model API endpoint, use it
-      if (_apiEndpoint != 'YOUR_MODEL_API_ENDPOINT') {
-        return await _detectViaAPI(text);
-      }
-
+      // Try Hugging Face API first
+      return await _detectViaHuggingFace(text);
+    } catch (e) {
+      debugPrint('Hugging Face API error: $e, falling back to rules');
       // Fallback: Rule-based detection
       return _detectViaRules(text);
-    } catch (e) {
-      debugPrint('Language detection error: $e');
-      return LanguageDetectionResult(
-        language: 'urdu',
-        confidence: 0.5,
-        isUrdu: true,
-      );
     }
   }
 
-  /// Detect language via API (when model is deployed)
-  Future<LanguageDetectionResult> _detectViaAPI(String text) async {
-    final response = await http.post(
-      Uri.parse(_apiEndpoint),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'text': text}),
-    );
+  /// Detect language via Hugging Face Inference API
+  Future<LanguageDetectionResult> _detectViaHuggingFace(String text) async {
+    final response = await http
+        .post(
+          Uri.parse(_apiEndpoint),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({'inputs': text}),
+        )
+        .timeout(const Duration(seconds: 10));
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      final prediction = data['prediction'] as int; // 0 = Urdu, 1 = Punjabi
-      final confidence = data['confidence'] as double;
 
-      return LanguageDetectionResult(
-        language: prediction == 0 ? 'urdu' : 'punjabi',
-        confidence: confidence,
-        isUrdu: prediction == 0,
-      );
+      // Hugging Face returns array of predictions
+      if (data is List && data.isNotEmpty) {
+        final predictions = data[0] as List;
+
+        // Find LABEL_0 (Urdu) and LABEL_1 (Punjabi)
+        double urduScore = 0.0;
+        double punjabiScore = 0.0;
+
+        for (var pred in predictions) {
+          if (pred['label'] == 'LABEL_0') {
+            urduScore = pred['score'] as double;
+          } else if (pred['label'] == 'LABEL_1') {
+            punjabiScore = pred['score'] as double;
+          }
+        }
+
+        final isUrdu = urduScore > punjabiScore;
+        final confidence = isUrdu ? urduScore : punjabiScore;
+
+        return LanguageDetectionResult(
+          language: isUrdu ? 'urdu' : 'punjabi',
+          confidence: confidence,
+          isUrdu: isUrdu,
+        );
+      }
     }
 
-    throw Exception('API request failed: ${response.statusCode}');
+    throw Exception('Hugging Face API request failed: ${response.statusCode}');
   }
 
   /// Rule-based detection (fallback)
