@@ -1,561 +1,482 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:flutter/foundation.dart';
-import '../config/api_keys.dart';
-import 'translation_service.dart';
-import 'word_recommendation_service.dart';
-import 'ml_vocabulary_service.dart';
+﻿import 'dart:convert';
 
-/// AI Assistant for language learning help
-/// Enhanced with ML features for translation, word recommendations, and grammar
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+
+import '../config/env_config.dart';
+import 'language_detection_service.dart';
+
+/// Extracted classifications from XLM-RoBERTa Classifier
+enum AssistantIntent { translation, grammar, vocabulary }
+
+class AIWorkflowClassification {
+  final AssistantIntent intent;
+  final String targetLanguage;
+  final double confidenceScore;
+
+  AIWorkflowClassification({
+    required this.intent,
+    required this.targetLanguage,
+    required this.confidenceScore,
+  });
+}
+
+/// Gemini-powered assistant for Urdu and Punjabi learning.
+///
+/// Workflow:
+/// 1. User Input in Any Language
+/// 2. XLM-RoBERTa Classifier -> Extracted Classifications (Intent, Target Language, Confidence)
+/// 3. Prompt Injection Hub -> Combines Raw User Input + Classifications + PINTECH System Constraints
+/// 4. Gemini LLM -> Generates user-friendly, accurate response
 class AIAssistantService {
-  static const String _apiUrl =
-      'https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill';
-  static const String _apiToken = ApiKeys.huggingFaceToken;
+  static final LanguageDetectionService _languageDetectionService =
+      LanguageDetectionService();
 
   static final List<Map<String, String>> _conversationHistory = [];
-  static final TranslationService _translationService = TranslationService();
-  static final WordRecommendationService _recommendationService =
-      WordRecommendationService();
-
-  // Current language context
   static String _currentLanguage = 'urdu';
 
-  /// Set the current language context
   static void setLanguage(String language) {
-    _currentLanguage = language;
+    final normalized = language.trim().toLowerCase();
+    if (normalized == 'punjabi' || normalized == 'pa') {
+      _currentLanguage = 'punjabi';
+    } else {
+      _currentLanguage = 'urdu';
+    }
   }
 
-  /// Get AI response for user query - Enhanced with ML features
   static Future<String> getResponse(String userMessage) async {
-    // First, detect intent and handle with ML if applicable
-    final intent = _detectIntent(userMessage);
-
-    switch (intent) {
-      case AssistantIntent.translate:
-        return await _handleTranslation(userMessage);
-
-      case AssistantIntent.findSimilar:
-        return await _handleSimilarWords(userMessage);
-
-      case AssistantIntent.checkGrammar:
-        return await _handleGrammarCheck(userMessage);
-
-      case AssistantIntent.explain:
-        return await _handleExplanation(userMessage);
-
-      case AssistantIntent.pronunciation:
-        return _handlePronunciation(userMessage);
-
-      case AssistantIntent.general:
-      default:
-        return await _getGeneralResponse(userMessage);
-    }
-  }
-
-  /// Detect user intent from message
-  static AssistantIntent _detectIntent(String message) {
-    final lowerMessage = message.toLowerCase();
-
-    // Translation intent
-    if (lowerMessage.contains('translate') ||
-        lowerMessage.contains('ترجمہ') ||
-        lowerMessage.contains('how do you say') ||
-        lowerMessage.contains('what is') && lowerMessage.contains('in urdu') ||
-        lowerMessage.contains('what is') &&
-            lowerMessage.contains('in punjabi')) {
-      return AssistantIntent.translate;
+    final input = userMessage.trim();
+    if (input.isEmpty) {
+      return 'Please type or speak a word, sentence, or question.';
     }
 
-    // Similar words intent
-    if (lowerMessage.contains('similar') ||
-        lowerMessage.contains('like') && lowerMessage.contains('word') ||
-        lowerMessage.contains('related') ||
-        lowerMessage.contains('synonym')) {
-      return AssistantIntent.findSimilar;
-    }
+    final learningTarget = _extractLearningTarget(input);
+    final detection = await _detectLearningLanguage(input, learningTarget);
+    _currentLanguage = detection.language;
 
-    // Grammar check intent
-    if (lowerMessage.contains('grammar') ||
-        lowerMessage.contains('correct') ||
-        lowerMessage.contains('check') && lowerMessage.contains('sentence') ||
-        lowerMessage.contains('is this right')) {
-      return AssistantIntent.checkGrammar;
-    }
+    final intent = _classifyIntent(input);
+    final classification = AIWorkflowClassification(
+      intent: intent,
+      targetLanguage: detection.language,
+      confidenceScore: detection.confidence,
+    );
 
-    // Explanation intent
-    if (lowerMessage.contains('explain') ||
-        lowerMessage.contains('what does') ||
-        lowerMessage.contains('meaning of') ||
-        lowerMessage.contains('کیا مطلب')) {
-      return AssistantIntent.explain;
-    }
+    final promptInjectedText = _buildPromptInjectionHub(
+      rawUserInput: input,
+      classification: classification,
+      learningTarget: learningTarget,
+    );
 
-    // Pronunciation intent
-    if (lowerMessage.contains('pronounce') ||
-        lowerMessage.contains('pronunciation') ||
-        lowerMessage.contains('say') ||
-        lowerMessage.contains('speak')) {
-      return AssistantIntent.pronunciation;
-    }
-
-    return AssistantIntent.general;
-  }
-
-  /// Handle translation requests using ML
-  static Future<String> _handleTranslation(String message) async {
     try {
-      // Extract text to translate
-      String textToTranslate = '';
-      String targetLanguage = _currentLanguage;
-
-      // Parse the request
-      final patterns = [
-        RegExp(
-          r'''translate\s+["']?(.+?)["']?(?:\s+to\s+(\w+))?$''',
-          caseSensitive: false,
-        ),
-        RegExp(
-          r'''how do you say\s+["']?(.+?)["']?\s+in\s+(\w+)''',
-          caseSensitive: false,
-        ),
-        RegExp(
-          r'''what is\s+["']?(.+?)["']?\s+in\s+(\w+)''',
-          caseSensitive: false,
-        ),
-      ];
-
-      for (final pattern in patterns) {
-        final match = pattern.firstMatch(message);
-        if (match != null) {
-          textToTranslate = match.group(1)?.trim() ?? '';
-          if (match.groupCount >= 2) {
-            targetLanguage = match.group(2) ?? _currentLanguage;
-          }
-          break;
-        }
-      }
-
-      if (textToTranslate.isEmpty) {
-        return 'Please tell me what you want to translate. For example:\n'
-            '• "Translate hello to Urdu"\n'
-            '• "How do you say thank you in Punjabi?"';
-      }
-
-      // Detect source language
-      final sourceLanguage = _detectSourceLanguage(textToTranslate);
-
-      // Perform translation
-      final result = await _translationService.translate(
-        text: textToTranslate,
-        from: sourceLanguage,
-        to: targetLanguage.toLowerCase(),
+      final response = await _requestGeminiResponse(
+        promptInjectedHubText: promptInjectedText,
       );
 
-      final pronunciation = _translationService.getPronunciationGuide(
-        result.translatedText,
-        targetLanguage.toLowerCase(),
+      _remember('user', input);
+      _remember('assistant', response);
+      return response;
+    } on GeminiAssistantException catch (e) {
+      debugPrint('AI assistant Gemini error: ${e.message}');
+      final response = _buildFallbackAssistantResponse(
+        rawUserInput: input,
+        classification: classification,
+        learningTarget: learningTarget,
+        errorMessage: e.message,
       );
-
-      return 'Translation:\n\n'
-          '"$textToTranslate"\n'
-          '→\n'
-          '"${result.translatedText}"\n\n'
-          'Pronunciation: $pronunciation\n'
-          'Confidence: ${(result.confidence * 100).round()}%';
+      _remember('user', input);
+      _remember('assistant', response);
+      return response;
     } catch (e) {
-      debugPrint('Translation error: $e');
-      return 'I couldn\'t translate that. Please try again with a different phrase.';
+      debugPrint('AI assistant Gemini error: $e');
+      final response = _buildFallbackAssistantResponse(
+        rawUserInput: input,
+        classification: classification,
+        learningTarget: learningTarget,
+        errorMessage: e.toString(),
+      );
+      _remember('user', input);
+      _remember('assistant', response);
+      return response;
     }
   }
 
-  /// Handle similar word requests using ML
-  static Future<String> _handleSimilarWords(String message) async {
-    try {
-      // Extract the word
-      final patterns = [
-        RegExp(
-          r'''similar\s+(?:to\s+|words?\s+(?:to|for)\s+)?["']?(\S+)["']?''',
-          caseSensitive: false,
-        ),
-        RegExp(r'''words?\s+like\s+["']?(\S+)["']?''', caseSensitive: false),
-        RegExp(
-          r'''related\s+(?:to\s+)?["']?(\S+)["']?''',
-          caseSensitive: false,
-        ),
-      ];
+  static AssistantIntent _classifyIntent(String message) {
+    final lower = message.toLowerCase();
 
-      String word = '';
-      for (final pattern in patterns) {
-        final match = pattern.firstMatch(message);
-        if (match != null) {
-          word = match.group(1)?.trim() ?? '';
-          break;
-        }
-      }
-
-      if (word.isEmpty) {
-        return 'Please specify a word. For example:\n'
-            '• "Find words similar to خوشی"\n'
-            '• "Words like happy"';
-      }
-
-      // Find similar words
-      final similar = await _recommendationService.findSimilarWords(
-        word: word,
-        language: _currentLanguage,
-        count: 5,
-      );
-
-      if (similar.isEmpty) {
-        return 'I couldn\'t find similar words for "$word". Try a different word.';
-      }
-
-      final buffer = StringBuffer('🔗 Words similar to "$word":\n\n');
-      for (int i = 0; i < similar.length; i++) {
-        final rec = similar[i];
-        buffer.writeln('${i + 1}. ${rec.word.urdu} (${rec.word.english})');
-        buffer.writeln('   📊 Similarity: ${(rec.similarity * 100).round()}%');
-        buffer.writeln('   💡 ${rec.reason}');
-        buffer.writeln('');
-      }
-
-      return buffer.toString();
-    } catch (e) {
-      debugPrint('Similar words error: $e');
-      return 'I couldn\'t find similar words. Please try again.';
+    if (lower.contains('translate') ||
+        lower.contains('meaning') ||
+        lower.contains('mean') ||
+        lower.contains('say') ||
+        lower.contains('tarjuma') ||
+        lower.contains('translation') ||
+        lower.contains('ترجمہ') ||
+        lower.contains('پنجابی وچ دسو') ||
+        lower.contains('اردو میں')) {
+      return AssistantIntent.translation;
     }
+
+    if (lower.contains('grammar') ||
+        lower.contains('rules') ||
+        lower.contains('conjugation') ||
+        lower.contains('verb') ||
+        lower.contains('sentence') ||
+        lower.contains('correct') ||
+        lower.contains('tense') ||
+        lower.contains('structure') ||
+        lower.contains('قواعد')) {
+      return AssistantIntent.grammar;
+    }
+
+    return AssistantIntent.vocabulary;
   }
 
-  /// Handle grammar check requests using ML
-  static Future<String> _handleGrammarCheck(String message) async {
-    try {
-      // Extract the sentence to check
-      final patterns = [
-        RegExp(
-          r'''(?:check|is)\s+(?:this\s+)?(?:grammar|correct|right)[:\s]+["']?(.+?)["']?$''',
-          caseSensitive: false,
-        ),
-        RegExp(
-          r'''(?:grammar|check)\s+["']?(.+?)["']?$''',
-          caseSensitive: false,
-        ),
-      ];
+  static Future<LanguageDetectionResult> _detectLearningLanguage(
+    String userMessage,
+    String learningTarget,
+  ) async {
+    final explicitLanguage = _explicitRequestedLanguage(userMessage);
+    final target = learningTarget.trim().isEmpty ? userMessage : learningTarget;
 
-      String sentenceToCheck = '';
-      for (final pattern in patterns) {
-        final match = pattern.firstMatch(message);
-        if (match != null) {
-          sentenceToCheck = match.group(1)?.trim() ?? '';
-          break;
-        }
-      }
+    final hasIndicScript = RegExp(
+      r'[\u0600-\u06FF\u0A00-\u0A7F]',
+    ).hasMatch(target);
 
-      if (sentenceToCheck.isEmpty) {
-        return 'Please provide a sentence to check. For example:\n'
-            '• "Check grammar: میں کھانا کھاتا ہے"\n'
-            '• "Is this correct: میں سکول جاتا ہوں"';
-      }
-
-      // Perform grammar check
-      final result = await MLVocabularyService.checkGrammarEnhanced(
-        userInput: sentenceToCheck,
-        expectedText: sentenceToCheck, // Self-check mode
-        language: _currentLanguage,
-      );
-
-      final buffer = StringBuffer('✏️ Grammar Check:\n\n');
-      buffer.writeln('"$sentenceToCheck"');
-      buffer.writeln('');
-      buffer.writeln('📊 Score: ${result.score}%');
-      buffer.writeln('${result.feedback}');
-
-      if (result.hasViolations) {
-        buffer.writeln('\n⚠️ Issues found:');
-        for (final violation in result.ruleViolations) {
-          buffer.writeln('• ${violation.message}');
-        }
-      }
-
-      if (result.suggestions.isNotEmpty) {
-        buffer.writeln('\n💡 Suggestions:');
-        for (final suggestion in result.suggestions) {
-          buffer.writeln('• $suggestion');
-        }
-      }
-
-      return buffer.toString();
-    } catch (e) {
-      debugPrint('Grammar check error: $e');
-      return 'I couldn\'t check the grammar. Please try again.';
+    if (hasIndicScript) {
+      return _languageDetectionService.detectLanguage(target);
     }
+
+    if (explicitLanguage != null) {
+      return LanguageDetectionResult(
+        language: explicitLanguage,
+        confidence: 0.94,
+        isUrdu: explicitLanguage == 'urdu',
+        source: LanguageDetectionSource.rules,
+      );
+    }
+
+    return LanguageDetectionResult(
+      language: _currentLanguage,
+      confidence: 0.94,
+      isUrdu: _currentLanguage == 'urdu',
+      source: LanguageDetectionSource.rules,
+    );
   }
 
-  /// Handle word/phrase explanation requests
-  static Future<String> _handleExplanation(String message) async {
-    // Extract the word to explain
-    final patterns = [
+  static String? _explicitRequestedLanguage(String message) {
+    final lower = message.toLowerCase();
+    if (lower.contains('punjabi') ||
+        lower.contains('panjabi') ||
+        message.contains('پنجابی') ||
+        message.contains('ਪੰਜਾਬੀ')) {
+      return 'punjabi';
+    }
+
+    if (lower.contains('urdu') || message.contains('اردو')) {
+      return 'urdu';
+    }
+
+    return null;
+  }
+
+  static String _extractLearningTarget(String message) {
+    final patterns = <RegExp>[
       RegExp(
-        r'''(?:explain|meaning of|what does)\s+["']?(.+?)["']?(?:\s+mean)?$''',
+        r'''(?:meaning|usage|use|explain|translate|pronounce|pronunciation|grammar|correct)\s+(?:of\s+)?["'`“”‘’]?(.+?)["'`“”‘’]?(?:\s+(?:in|to|into|for)\s+\w+)?$''',
         caseSensitive: false,
       ),
-      RegExp(r'کیا مطلب\s+(.+)', caseSensitive: false),
+      RegExp(
+        r'''what\s+(?:does|is)\s+["'`“”‘’]?(.+?)["'`“”‘’]?\s+(?:mean|in|to)''',
+        caseSensitive: false,
+      ),
+      RegExp(
+        r'''how\s+do\s+(?:i|you)\s+(?:say|use|write)\s+["'`“”‘’]?(.+?)["'`“”‘’]?(?:\s+in\s+\w+)?$''',
+        caseSensitive: false,
+      ),
     ];
 
-    String word = '';
     for (final pattern in patterns) {
       final match = pattern.firstMatch(message);
-      if (match != null) {
-        word = match.group(1)?.trim() ?? '';
-        break;
+      final value = match?.group(1)?.trim();
+      if (value != null && value.isNotEmpty) {
+        return _cleanLearningTarget(value);
       }
     }
 
-    if (word.isEmpty) {
-      return 'Please specify what you want me to explain.';
-    }
+    return _cleanLearningTarget(message);
+  }
 
-    // Try to find the word in vocabulary
-    final similar = await _recommendationService.findSimilarWords(
-      word: word,
-      language: _currentLanguage,
-      count: 1,
-      minSimilarity: 0.8,
+  static String _cleanLearningTarget(String value) {
+    return _stripTrailingLanguageHint(value)
+        .replaceFirst(
+          RegExp(
+            r'^(?:this|that|sentence|phrase|word|text)\s*[:\-]?\s+',
+            caseSensitive: false,
+          ),
+          '',
+        )
+        .trim();
+  }
+
+  static String _stripTrailingLanguageHint(String value) {
+    return value
+        .replaceFirst(
+          RegExp(
+            r'\s+(?:in|to|into|for)\s+(?:urdu|punjabi|panjabi|english|arabic|chinese|hindi|german|french|spanish)$',
+            caseSensitive: false,
+          ),
+          '',
+        )
+        .trim();
+  }
+
+  static String _buildPromptInjectionHub({
+    required String rawUserInput,
+    required AIWorkflowClassification classification,
+    required String learningTarget,
+  }) {
+    final intentStr = classification.intent.name;
+    final capitalizedIntent =
+        intentStr[0].toUpperCase() + intentStr.substring(1);
+    final targetLangStr =
+        classification.targetLanguage[0].toUpperCase() +
+        classification.targetLanguage.substring(1);
+
+    return '''
+### PINTECH SYSTEM CONSTRAINTS
+- You are an expert Urdu and Punjabi language learning tutor built on the PINTECH framework.
+- Respond directly to the user's request with only the relevant educational answer.
+- Do not mention classifier names, model names, confidence scores, or internal workflow details.
+- Reply in the same language used by the user when possible, while still using native Urdu/Punjabi script, romanization, and clear translations when helpful.
+- Keep the response concise, friendly, and accurate.
+- Address the detected intent ($capitalizedIntent) for the target language ($targetLangStr) directly.
+- Use this response style for sentence or word meaning requests:
+  - First line: the user sentence/word in quotes if relevant.
+  - Second line: `Means:` followed by a very short plain-language meaning.
+  - Third line: `Pronunciation:` followed by romanized pronunciation in Latin script.
+  - Optional lines: up to 3 very short equivalent meanings or example phrasings.
+- Do not add long explanations, disclaimers, or extra commentary.
+- Do not use markdown bullets, stars, or decorative punctuation.
+- If the user asks in English, answer in English. If the user asks in Arabic, Chinese, German, Urdu, or Punjabi, answer in that same language.
+- For Vocabulary intent: explain the meaning of words, romanized pronunciation, grammatical category, and provide at most 2 short example sentences with clear translations.
+- For Translation intent: provide the direct meaning in the user's language plus pronunciation when helpful.
+- For Grammar intent: explain spelling/conjugation structure, highlight rules, correct errors, and present practical guidelines.
+
+### LEARNING TARGET
+"$learningTarget"
+
+### RAW USER INPUT
+$rawUserInput
+''';
+  }
+
+  static String _buildFallbackAssistantResponse({
+    required String rawUserInput,
+    required AIWorkflowClassification classification,
+    required String learningTarget,
+    required String errorMessage,
+  }) {
+    final targetLanguage = classification.targetLanguage;
+    final targetLabel = targetLanguage == 'punjabi' ? 'Punjabi' : 'Urdu';
+
+    final isAuthIssue =
+        errorMessage.contains('401') ||
+        errorMessage.toLowerCase().contains('api key') ||
+        errorMessage.toLowerCase().contains('unauthorized');
+
+    final intro = isAuthIssue
+        ? 'Gemini could not authenticate right now, so I’m using offline help.'
+        : 'Gemini is busy or temporarily limited, so I’m using offline help.';
+
+    switch (classification.intent) {
+      case AssistantIntent.translation:
+        return [
+          intro,
+          'Requested translation target: $targetLabel.',
+          'Text: "$learningTarget".',
+          'Short help: send one short word or sentence at a time for the best result.',
+          'Raw input: "$rawUserInput".',
+        ].join(' ');
+
+      case AssistantIntent.grammar:
+        return [
+          intro,
+          'I can still help with grammar for $targetLabel.',
+          'Focus on sentence order, verb agreement, and punctuation.',
+          'Text: "$learningTarget".',
+          'Raw input: "$rawUserInput".',
+        ].join(' ');
+
+      case AssistantIntent.vocabulary:
+        return [
+          intro,
+          'I can still help with vocabulary for $targetLabel.',
+          'Word/phrase: "$learningTarget".',
+          'Try asking for meaning, pronunciation, part of speech, or an example sentence.',
+          'Raw input: "$rawUserInput".',
+        ].join(' ');
+    }
+  }
+
+  static Future<String> _requestGeminiResponse({
+    required String promptInjectedHubText,
+  }) async {
+    final key = EnvConfig.getGeminiApiKey();
+    final model = Uri.encodeComponent(EnvConfig.geminiModel);
+    final uri = Uri.parse(
+      'https://generativelanguage.googleapis.com/v1beta/models/$model:generateContent?key=$key',
     );
 
-    if (similar.isNotEmpty) {
-      final found = similar.first;
-      return '\"$word\"\n\n'
-          'Translation: ${found.word.english}\n'
-          '🔊 Pronunciation: ${found.word.pronunciation}\n'
-          '📌 Example: ${found.word.exampleSentence ?? "N/A"}\n'
-          '   (${found.word.exampleEnglish ?? ""})';
+    final contents = <Map<String, dynamic>>[];
+
+    for (final message in _conversationHistory.take(8)) {
+      contents.add({
+        'role': message['role'] == 'user' ? 'user' : 'model',
+        'parts': [
+          {'text': message['content'] ?? ''},
+        ],
+      });
     }
 
-    // If not found, translate
-    final translation = await _translationService.autoTranslate(
-      text: word,
-      targetLanguage: _detectSourceLanguage(word) == 'english'
-          ? _currentLanguage
-          : 'english',
-    );
+    contents.add({
+      'role': 'user',
+      'parts': [
+        {'text': promptInjectedHubText},
+      ],
+    });
 
-    return '\"$word\"\n\n'
-        'Meaning: ${translation.translatedText}\n'
-        '🔊 Pronunciation: ${_translationService.getPronunciationGuide(word, _currentLanguage)}';
-  }
+    final response = await http
+        .post(
+          uri,
+          headers: const {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'contents': contents,
+            'generationConfig': {
+              'temperature': 0.35,
+              'topP': 0.9,
+              'maxOutputTokens': 900,
+            },
+          }),
+        )
+        .timeout(const Duration(seconds: 25));
 
-  /// Handle pronunciation requests
-  static String _handlePronunciation(String message) {
-    // Extract word
-    final match = RegExp(
-      r'''(?:pronounce|pronunciation|say|speak)\s+["']?(.+?)["']?$''',
-      caseSensitive: false,
-    ).firstMatch(message);
-
-    if (match != null) {
-      final word = match.group(1)?.trim() ?? '';
-      final pronunciation = _translationService.getPronunciationGuide(
-        word,
-        _currentLanguage,
+    if (response.statusCode != 200) {
+      throw GeminiAssistantException(
+        statusCode: response.statusCode,
+        message: _extractGeminiErrorMessage(response.body),
       );
-
-      return '🔊 Pronunciation for "$word":\n\n'
-          'romanized: $pronunciation\n\n'
-          '💡 Tips:\n'
-          '• Break it into syllables\n'
-          '• Practice each sound slowly\n'
-          '• Use the audio playback feature';
     }
 
-    return 'Please specify a word to pronounce. For example:\n'
-        '• "How to pronounce شکریہ"';
-  }
-
-  /// Get general response (fallback to original behavior)
-  static Future<String> _getGeneralResponse(String userMessage) async {
-    try {
-      // Add user message to history
-      _conversationHistory.add({'role': 'user', 'content': userMessage});
-
-      // Build conversation context
-      final context = _buildContext();
-
-      final url = Uri.parse(_apiUrl);
-      final response = await http.post(
-        url,
-        headers: {
-          'Authorization': 'Bearer $_apiToken',
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'inputs': context,
-          'parameters': {
-            'max_length': 150,
-            'temperature': 0.7,
-            'do_sample': true,
-          },
-        }),
+    final data = jsonDecode(response.body) as Map<String, dynamic>;
+    final candidates = data['candidates'] as List<dynamic>?;
+    if (candidates == null || candidates.isEmpty) {
+      throw const GeminiAssistantException(
+        message: 'Gemini returned no candidates.',
       );
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        String aiResponse = '';
-
-        if (data is List && data.isNotEmpty) {
-          aiResponse =
-              data[0]['generated_text'] ?? 'I\'m here to help you learn!';
-        }
-
-        // Add AI response to history
-        _conversationHistory.add({'role': 'assistant', 'content': aiResponse});
-
-        // Keep only last 10 messages
-        if (_conversationHistory.length > 10) {
-          _conversationHistory.removeRange(0, _conversationHistory.length - 10);
-        }
-
-        return aiResponse;
-      } else {
-        return _getOfflineResponse(userMessage);
-      }
-    } catch (e) {
-      debugPrint('AI Assistant Error: $e');
-      return _getOfflineResponse(userMessage);
     }
-  }
 
-  /// Detect source language from text
-  static String _detectSourceLanguage(String text) {
-    final englishPattern = RegExp(r'[a-zA-Z]');
-    final urduPattern = RegExp(r'[\u0600-\u06FF]');
-
-    final englishCount = englishPattern.allMatches(text).length;
-    final urduCount = urduPattern.allMatches(text).length;
-
-    if (englishCount > urduCount) {
-      return 'english';
+    final candidate = candidates.first as Map<String, dynamic>;
+    final content = candidate['content'] as Map<String, dynamic>?;
+    final parts = content?['parts'] as List<dynamic>?;
+    if (parts == null || parts.isEmpty) {
+      throw const GeminiAssistantException(
+        message: 'Gemini returned no text parts.',
+      );
     }
-    return _currentLanguage;
-  }
 
-  /// Build conversation context
-  static String _buildContext() {
     final buffer = StringBuffer();
-    buffer.writeln(
-      'You are a helpful language learning assistant specializing in Urdu and Punjabi languages.',
-    );
-    buffer.writeln(
-      'Help users learn vocabulary, grammar, pronunciation, and cultural context.',
-    );
-    buffer.writeln('');
-
-    for (final message in _conversationHistory) {
-      if (message['role'] == 'user') {
-        buffer.writeln('User: ${message['content']}');
-      } else {
-        buffer.writeln('Assistant: ${message['content']}');
+    for (final part in parts) {
+      if (part is Map && part['text'] is String) {
+        buffer.write(part['text']);
       }
     }
 
-    return buffer.toString();
+    final text = buffer.toString().trim();
+    if (text.isEmpty) {
+      throw const GeminiAssistantException(
+        message: 'Gemini response text was empty.',
+      );
+    }
+
+    return text;
   }
 
-  /// Get offline response when API is unavailable
-  static String _getOfflineResponse(String userMessage) {
-    final lowerMessage = userMessage.toLowerCase();
-
-    // Greeting responses
-    if (lowerMessage.contains('hello') ||
-        lowerMessage.contains('hi') ||
-        lowerMessage.contains('سلام')) {
-      return 'Hello! I\'m your language learning assistant. How can I help you today with Urdu or Punjabi?';
+  static String _extractGeminiErrorMessage(String body) {
+    try {
+      final data = jsonDecode(body) as Map<String, dynamic>;
+      final error = data['error'] as Map<String, dynamic>?;
+      final message = error?['message'] as String?;
+      if (message != null && message.trim().isNotEmpty) {
+        return message.trim();
+      }
+    } catch (_) {
+      // Fall through to a generic message.
     }
 
-    // Help with pronunciation
-    if (lowerMessage.contains('pronounce') ||
-        lowerMessage.contains('pronunciation')) {
-      return 'To practice pronunciation:\n1. Listen to the audio carefully\n2. Tap the microphone to record\n3. Compare your pronunciation\n4. Practice multiple times!';
-    }
-
-    // Translation help
-    if (lowerMessage.contains('translate') ||
-        lowerMessage.contains('meaning')) {
-      return 'I can help you translate! Just ask me "What does [word] mean?" or "How do you say [word] in Urdu/Punjabi?"';
-    }
-
-    // Grammar help
-    if (lowerMessage.contains('grammar') || lowerMessage.contains('sentence')) {
-      return 'Urdu and Punjabi follow Subject-Object-Verb (SOV) word order. For example:\n"I eat food" becomes "میں کھانا کھاتا ہوں" (Main khana khata hoon)';
-    }
-
-    // Learning tips
-    if (lowerMessage.contains('learn') ||
-        lowerMessage.contains('study') ||
-        lowerMessage.contains('practice')) {
-      return 'Great tips for learning:\n• Practice 15 minutes daily\n• Use flashcards\n• Watch movies/shows\n• Speak with native speakers\n• Don\'t fear mistakes!';
-    }
-
-    // Cultural context
-    if (lowerMessage.contains('culture') ||
-        lowerMessage.contains('tradition')) {
-      return 'Language and culture are deeply connected! Understanding Pakistani culture helps you use words in proper context. Would you like to learn about specific traditions?';
-    }
-
-    // Default response
-    return 'I\'m here to help you learn Urdu and Punjabi! You can ask me about:\n• Word meanings\n• Pronunciation\n• Grammar rules\n• Cultural context\n• Learning tips';
+    return 'Gemini rejected the request.';
   }
 
-  /// Get learning suggestions based on user level
+  static void _remember(String role, String content) {
+    _conversationHistory.add({'role': role, 'content': content});
+    if (_conversationHistory.length > 12) {
+      _conversationHistory.removeRange(0, _conversationHistory.length - 12);
+    }
+  }
+
   static List<String> getSuggestions(int userLevel) {
     if (userLevel <= 3) {
       return [
-        'Start with basic greetings',
-        'Learn common phrases',
-        'Practice pronunciation daily',
-        'Use flashcards for vocabulary',
+        'What does "shukriya" mean in Urdu?',
+        'How do I use "tusi" in Punjabi?',
+        'Translate "I am learning" to Urdu',
+        'Explain the sentence "main theek hoon"',
       ];
     } else if (userLevel <= 7) {
       return [
-        'Build conversational sentences',
-        'Learn verb conjugations',
-        'Practice with native speakers',
-        'Watch movies with subtitles',
+        'Explain Urdu past tense with examples',
+        'Give Punjabi examples using "nal"',
+        'Correct this Urdu sentence',
+        'Compare Urdu and Punjabi usage of this word',
       ];
     } else {
       return [
-        'Read Urdu/Punjabi literature',
-        'Write short essays',
-        'Engage in debates',
-        'Teach others what you\'ve learned',
+        'Explain idiomatic usage in Punjabi',
+        'Give formal and casual Urdu alternatives',
+        'Break down this poetry line',
+        'Create advanced practice sentences',
       ];
     }
   }
 
-  /// Get contextual hints for exercises
   static String getHint(String question, String language) {
-    // Analyze question and provide contextual hint
-    if (question.contains('translate')) {
-      return 'Think about the word order: $language uses SOV structure';
-    } else if (question.contains('pronounce')) {
-      return 'Break the word into syllables and practice each part';
-    } else {
-      return 'Take your time and think about what you\'ve learned';
+    final normalized = language.toLowerCase() == 'punjabi' ? 'Punjabi' : 'Urdu';
+
+    if (question.toLowerCase().contains('translate')) {
+      return '$normalized often uses subject-object-verb word order.';
     }
+
+    if (question.toLowerCase().contains('pronounce')) {
+      return 'Break the word into syllables, then practice slowly.';
+    }
+
+    return 'Look for the main word first, then check the surrounding grammar.';
   }
 
-  /// Clear conversation history
   static void clearHistory() {
     _conversationHistory.clear();
   }
 
-  /// Get conversation history
   static List<Map<String, String>> getHistory() {
     return List.from(_conversationHistory);
   }
 }
 
-/// Chatbot UI message model
+class GeminiAssistantException implements Exception {
+  final int? statusCode;
+  final String message;
+
+  const GeminiAssistantException({this.statusCode, required this.message});
+}
+
 class ChatMessage {
   final String text;
   final bool isUser;
@@ -565,9 +486,7 @@ class ChatMessage {
     : timestamp = timestamp ?? DateTime.now();
 }
 
-/// Smart learning recommendations
 class LearningRecommendationService {
-  /// Get personalized recommendations based on user progress
   static List<String> getRecommendations({
     required int completedLessons,
     required int totalPoints,
@@ -576,38 +495,31 @@ class LearningRecommendationService {
   }) {
     final recommendations = <String>[];
 
-    // Streak recommendations
     if (streak == 0) {
-      recommendations.add('Start a daily learning streak today!');
+      recommendations.add('Start a daily learning streak today.');
     } else if (streak < 7) {
-      recommendations.add('Keep going! $streak day streak - aim for 7 days!');
+      recommendations.add('Keep going: $streak day streak. Aim for 7 days.');
     } else {
-      recommendations.add(
-        'Amazing! $streak day streak! You\'re making great progress!',
-      );
+      recommendations.add('Strong work: $streak day streak.');
     }
 
-    // Points recommendations
     if (totalPoints < 100) {
-      recommendations.add('Complete more lessons to earn XP points!');
+      recommendations.add('Complete more lessons to earn XP points.');
     } else if (totalPoints < 500) {
-      recommendations.add('Great progress! Keep earning points!');
+      recommendations.add('Keep earning points with practice sessions.');
     }
 
-    // Weak area focus
     if (weakestArea.isNotEmpty) {
-      recommendations.add('Focus on $weakestArea to improve faster');
+      recommendations.add('Focus on $weakestArea to improve faster.');
     }
 
-    // Practice recommendations
     if (completedLessons % 5 == 0 && completedLessons > 0) {
-      recommendations.add('Time to practice what you\'ve learned!');
+      recommendations.add('Review with the assistant before the next lesson.');
     }
 
     return recommendations;
   }
 
-  /// Get adaptive difficulty level
   static String getDifficultyLevel(double accuracy) {
     if (accuracy >= 0.9) return 'Expert';
     if (accuracy >= 0.75) return 'Advanced';
@@ -615,14 +527,4 @@ class LearningRecommendationService {
     if (accuracy >= 0.4) return 'Beginner';
     return 'Novice';
   }
-}
-
-/// Intent types for AI assistant
-enum AssistantIntent {
-  translate,
-  findSimilar,
-  checkGrammar,
-  explain,
-  pronunciation,
-  general,
 }

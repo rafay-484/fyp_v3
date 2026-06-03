@@ -1,29 +1,39 @@
+﻿import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-import '../config/api_keys.dart';
 
-/// Service for detecting language (Urdu vs Punjabi) using trained XLM-RoBERTa model
+import '../config/env_config.dart';
+
+/// Detects whether a learning target is Urdu or Punjabi.
+///
+/// The primary path uses the project's XLM-RoBERTa Hugging Face model. If the
+/// token/model is unavailable, the app falls back to deterministic script and
+/// common-word rules so the assistant still works offline.
 class LanguageDetectionService {
-  // Using Hugging Face Inference API
-  static const String _huggingFaceModel = 'RAFAY-484/Urdu-Punjabi-V2';
+  static const String _huggingFaceModel = EnvConfig.huggingFaceModelId;
   static const String _apiEndpoint =
       'https://api-inference.huggingface.co/models/$_huggingFaceModel';
-  static const String _hfToken = ApiKeys.huggingFaceModelToken;
 
-  /// Detect if text is Urdu (0) or Punjabi (1)
   Future<LanguageDetectionResult> detectLanguage(String text) async {
+    final cleaned = text.trim();
+    if (cleaned.isEmpty) {
+      return LanguageDetectionResult(
+        language: 'urdu',
+        confidence: 0.5,
+        isUrdu: true,
+        source: LanguageDetectionSource.rules,
+      );
+    }
+
     try {
-      // Try Hugging Face API first
-      return await _detectViaHuggingFace(text, retry: 1);
+      return await _detectViaHuggingFace(cleaned, retry: 1);
     } catch (e) {
-      debugPrint('Hugging Face API error: $e, falling back to rules');
-      // Fallback: Rule-based detection
-      return _detectViaRules(text);
+      debugPrint('XLM-R language detection unavailable, using rules: $e');
+      return _detectViaRules(cleaned);
     }
   }
 
-  /// Detect language via Hugging Face Inference API
   Future<LanguageDetectionResult> _detectViaHuggingFace(
     String text, {
     int retry = 1,
@@ -33,7 +43,7 @@ class LanguageDetectionService {
           Uri.parse(_apiEndpoint),
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer $_hfToken',
+            'Authorization': 'Bearer ${EnvConfig.getHuggingFaceToken()}',
           },
           body: jsonEncode({'inputs': text}),
         )
@@ -44,43 +54,67 @@ class LanguageDetectionService {
       return _detectViaHuggingFace(text, retry: retry - 1);
     }
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
+    if (response.statusCode != 200) {
+      throw Exception('Hugging Face request failed: ${response.statusCode}');
+    }
 
-      // Hugging Face returns array of predictions
-      if (data is List && data.isNotEmpty) {
-        final predictions = data[0] as List;
+    final data = jsonDecode(response.body);
+    final predictions = _extractPredictions(data);
+    if (predictions.isEmpty) {
+      throw Exception('No language predictions returned');
+    }
 
-        // Find LABEL_0 (Urdu) and LABEL_1 (Punjabi)
-        double urduScore = 0.0;
-        double punjabiScore = 0.0;
+    double urduScore = 0;
+    double punjabiScore = 0;
 
-        for (var pred in predictions) {
-          if (pred['label'] == 'LABEL_0') {
-            urduScore = pred['score'] as double;
-          } else if (pred['label'] == 'LABEL_1') {
-            punjabiScore = pred['score'] as double;
-          }
-        }
+    for (final prediction in predictions) {
+      final label = prediction['label']?.toString().toLowerCase() ?? '';
+      final score = (prediction['score'] as num?)?.toDouble() ?? 0;
 
-        final isUrdu = urduScore > punjabiScore;
-        final confidence = isUrdu ? urduScore : punjabiScore;
-
-        return LanguageDetectionResult(
-          language: isUrdu ? 'urdu' : 'punjabi',
-          confidence: confidence,
-          isUrdu: isUrdu,
-        );
+      if (label == 'label_0' || label.contains('urdu')) {
+        urduScore = score;
+      } else if (label == 'label_1' || label.contains('punjabi')) {
+        punjabiScore = score;
       }
     }
 
-    throw Exception('Hugging Face API request failed: ${response.statusCode}');
+    if (urduScore == 0 && punjabiScore == 0) {
+      throw Exception('Unknown prediction labels: $predictions');
+    }
+
+    final isUrdu = urduScore >= punjabiScore;
+    return LanguageDetectionResult(
+      language: isUrdu ? 'urdu' : 'punjabi',
+      confidence: isUrdu ? urduScore : punjabiScore,
+      isUrdu: isUrdu,
+      source: LanguageDetectionSource.xlmRoberta,
+    );
   }
 
-  /// Rule-based detection (fallback)
+  List<Map<String, dynamic>> _extractPredictions(dynamic data) {
+    if (data is List && data.isNotEmpty) {
+      if (data.first is List) {
+        return (data.first as List)
+            .whereType<Map>()
+            .map((item) => Map<String, dynamic>.from(item))
+            .toList();
+      }
+
+      if (data.first is Map) {
+        return data
+            .whereType<Map>()
+            .map((item) => Map<String, dynamic>.from(item))
+            .toList();
+      }
+    }
+
+    return const [];
+  }
+
   LanguageDetectionResult _detectViaRules(String text) {
-    // Common Urdu words
-    final urduWords = [
+    final lower = text.toLowerCase();
+
+    final urduWords = <String>[
       'ہے',
       'ہیں',
       'تھا',
@@ -100,15 +134,18 @@ class LanguageDetectionService {
       'آپ',
       'ہم',
       'تم',
-      'وہ',
-      'یا',
       'لیے',
-      'لئے',
       'بھی',
+      'aap',
+      'kya',
+      'kyun',
+      'main',
+      'hai',
+      'hain',
+      'urdu',
     ];
 
-    // Common Punjabi words and patterns
-    final punjabiWords = [
+    final punjabiWords = <String>[
       'اے',
       'او',
       'نوں',
@@ -119,10 +156,8 @@ class LanguageDetectionService {
       'نال',
       'وچ',
       'تے',
-      'کی',
       'اوہ',
       'ایہ',
-      'میں',
       'تسی',
       'اسی',
       'تیری',
@@ -132,59 +167,90 @@ class LanguageDetectionService {
       'ہور',
       'کوئی',
       'جے',
+      'tusi',
+      'tuha',
+      'tuhada',
+      'sadda',
+      'ki haal',
+      'punjabi',
+      'panjabi',
     ];
 
-    int urduScore = 0;
-    int punjabiScore = 0;
+    var urduScore = 0;
+    var punjabiScore = 0;
 
-    // Count matches
     for (final word in urduWords) {
-      if (text.contains(word)) urduScore++;
+      if (lower.contains(word.toLowerCase())) {
+        urduScore++;
+      }
     }
 
     for (final word in punjabiWords) {
-      if (text.contains(word)) punjabiScore++;
+      if (lower.contains(word.toLowerCase())) {
+        punjabiScore++;
+      }
     }
 
-    // Determine result
-    final isUrdu = urduScore >= punjabiScore;
-    final totalMatches = urduScore + punjabiScore;
-    final confidence = totalMatches > 0
-        ? (isUrdu ? urduScore : punjabiScore) / totalMatches
-        : 0.5;
+    if (_hasGurmukhi(text)) {
+      punjabiScore += 4;
+    }
 
+    final isUrdu = urduScore >= punjabiScore;
+    final total = urduScore + punjabiScore;
     return LanguageDetectionResult(
       language: isUrdu ? 'urdu' : 'punjabi',
-      confidence: confidence,
+      confidence: total == 0
+          ? 0.5
+          : ((isUrdu ? urduScore : punjabiScore) / total).clamp(0.5, 1),
       isUrdu: isUrdu,
+      source: LanguageDetectionSource.rules,
     );
   }
 
-  /// Batch detect languages for multiple texts
+  static bool _hasGurmukhi(String text) {
+    return RegExp(r'[\u0A00-\u0A7F]').hasMatch(text);
+  }
+
   Future<List<LanguageDetectionResult>> detectLanguageBatch(
     List<String> texts,
   ) async {
-    return Future.wait(texts.map((text) => detectLanguage(text)));
+    return Future.wait(texts.map(detectLanguage));
   }
 }
 
-/// Result of language detection
+enum LanguageDetectionSource { xlmRoberta, rules, script }
+
 class LanguageDetectionResult {
-  final String language; // 'urdu' or 'punjabi'
-  final double confidence; // 0.0 to 1.0
+  final String language;
+  final double confidence;
   final bool isUrdu;
+  final LanguageDetectionSource source;
 
   LanguageDetectionResult({
     required this.language,
     required this.confidence,
     required this.isUrdu,
+    this.source = LanguageDetectionSource.rules,
   });
 
   bool get isPunjabi => !isUrdu;
 
-  String get displayName => isUrdu ? 'اردو (Urdu)' : 'پنجابی (Punjabi)';
+  String get displayName => isUrdu ? 'Urdu' : 'Punjabi';
+
+  String get sourceLabel {
+    switch (source) {
+      case LanguageDetectionSource.xlmRoberta:
+        return 'XLM-RoBERTa';
+      case LanguageDetectionSource.script:
+        return 'script';
+      case LanguageDetectionSource.rules:
+        return 'rules';
+    }
+  }
 
   @override
-  String toString() =>
-      '$displayName (${(confidence * 100).toStringAsFixed(1)}%)';
+  String toString() {
+    final percent = (confidence * 100).toStringAsFixed(1);
+    return '$displayName ($percent%, $sourceLabel)';
+  }
 }
